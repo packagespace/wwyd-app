@@ -1,10 +1,10 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  hand: MyString
-  solution: MyString
-  explanation: MyText
+  title: Riichi Book 1 Intro
+  hand: 44m667s123678s 666'z
+  solution: 6p
+  explanation: Sample explanation
 
 two:
   title: MyString
