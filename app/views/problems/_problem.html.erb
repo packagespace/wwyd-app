@@ -4,15 +4,14 @@
     <%= problem.title %>
   </p>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Hand:</strong>
-    <%= problem.hand %>
-  </p>
+  <div class="flex flex-initial w-4/5">
+      <%= display_tiles(problem.tiles, 'w-10') %>
+  </div>
 
-<!--  <p id="solution" class="my-5">-->
-<!--    <strong class="block font-medium mb-1">Solution:</strong>-->
-    <%#= problem.solution %>
-<!--  </p>-->
+  <!--  <p id="solution" class="my-5">-->
+  <!--    <strong class="block font-medium mb-1">Solution:</strong>-->
+  <%#= problem.solution %>
+  <!--  </p>-->
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Explanation:</strong>
