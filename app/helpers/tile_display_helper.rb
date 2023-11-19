@@ -44,7 +44,7 @@ module TileDisplayHelper
     }
 
     tile_images.each do |tile_label, tile_image|
-      text_with_tiles.gsub!(tile_label, image_tag(tile_image, class: "inline #{style}"))
+      text_with_tiles.gsub!(tile_label, image_tag(tile_image, class: "inline tile bg-contain #{style}"))
     end
 
     text_with_tiles.html_safe
