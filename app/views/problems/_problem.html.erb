@@ -5,7 +5,7 @@
   </p>
 
   <div class="flex flex-initial w-4/5">
-      <%= display_tiles(problem.tiles, 'w-10') %>
+      <%= display_tiles(problem.tiles, 'w-10 hover:bottom-5 relative', problem) %>
   </div>
 
   <!--  <p id="solution" class="my-5">-->
@@ -13,10 +13,10 @@
   <%#= problem.solution %>
   <!--  </p>-->
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Explanation:</strong>
-    <%= problem.explanation %>
-  </p>
+<!--  <p class="my-5">-->
+<!--    <strong class="block font-medium mb-1">Explanation:</strong>-->
+    <%#= display_tiles(problem.explanation, 'w-5') %>
+<!--  </p>-->
 
   <% if action_name != "show" %>
     <%= link_to "Show this problem", problem, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>

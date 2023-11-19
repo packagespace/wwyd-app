@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module TileDisplayHelper
-  def display_tiles(text_with_tiles, style)
+  def display_tiles(text_with_tiles, style, problem)
     tile_images_files = {
       '0m' => 'Man5-Dora.svg',
       '1m' => 'Man1.svg',
@@ -43,8 +43,23 @@ module TileDisplayHelper
       '7z' => 'Chun.svg',
     }
 
+    replacements = [] # Store replaced substrings
+
     tile_images_files.each do |tile_label, tile_image_file|
-      text_with_tiles.gsub!(tile_label, image_tag("tiles/#{tile_image_file}", class: "inline tile bg-contain #{style}"))
+      text_with_tiles.gsub!(
+        tile_label,
+        "\x01" + tile_label + "\x02"
+      )
+
+      replacements << button_to(
+        image_tag("tiles/#{tile_image_file}"),
+        problems_path,
+        class: "inline tile bg-contain #{style}"
+      )
+    end
+
+    replacements.each_with_index do |replacement, index|
+      text_with_tiles.gsub!("\x01#{tile_images_files.keys[index]}\x02", replacement)
     end
 
     text_with_tiles.html_safe
