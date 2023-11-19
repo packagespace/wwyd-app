@@ -8,6 +8,7 @@ class ProblemsController < ApplicationController
 
   # GET /problems/1 or /problems/1.json
   def show
+    @solved = ActiveModel::Type::Boolean.new.cast params[:solved]
   end
 
   # GET /problems/new
@@ -59,21 +60,20 @@ class ProblemsController < ApplicationController
 
   def solve
     @problem
-    answer = params[:selected_tile]
+    correct = @problem.is_solved_by? params[:selected_tile]
 
-    correct = @problem.is_solved_by? answer
-
-    redirect_to problem_url(@problem), notice: "#{answer} #{correct}"
+    redirect_to problem_url(@problem, solved: correct)
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_problem
-      @problem = Problem.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def problem_params
-      params.require(:problem).permit(:title, :hand, :solution, :explanation)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_problem
+    @problem = Problem.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def problem_params
+    params.require(:problem).permit(:title, :hand, :solution, :explanation)
+  end
 end
