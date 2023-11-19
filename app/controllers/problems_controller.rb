@@ -1,5 +1,5 @@
 class ProblemsController < ApplicationController
-  before_action :set_problem, only: %i[ show edit update destroy ]
+  before_action :set_problem, only: %i[ show edit update destroy solve]
 
   # GET /problems or /problems.json
   def index
@@ -55,6 +55,15 @@ class ProblemsController < ApplicationController
       format.html { redirect_to problems_url, notice: "Problem was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def solve
+    @problem
+    answer = params[:selected_tile]
+
+    correct = @problem.is_solved_by? answer
+
+    redirect_to problem_url(@problem), notice: "#{answer} #{correct}"
   end
 
   private

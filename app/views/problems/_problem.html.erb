@@ -4,14 +4,14 @@
     <%= problem.title %>
   </p>
 
-  <div class="flex flex-initial w-4/5">
-      <%= display_tiles(problem.tiles, 'w-10 hover:bottom-5 relative', problem) %>
+  <div class="flex flex-initial w-4/5 mx-auto gap-0.5">
+    <%= display_clickable_tiles(problem.tiles, ' hover:bottom-5 relative ', problem) %>
   </div>
 
-  <!--  <p id="solution" class="my-5">-->
-  <!--    <strong class="block font-medium mb-1">Solution:</strong>-->
-  <%#= problem.solution %>
-  <!--  </p>-->
+<!--  <p id="solution" class="my-5">-->
+<!--    <strong class="block font-medium mb-1">Solution:</strong>-->
+    <%#= problem.solution %>
+<!--  </p>-->
 
 <!--  <p class="my-5">-->
 <!--    <strong class="block font-medium mb-1">Explanation:</strong>-->

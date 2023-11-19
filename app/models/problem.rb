@@ -9,4 +9,14 @@ class Problem < ApplicationRecord
       result
     end
   end
+
+  def is_solved_by?(answer)
+    self[:solution].gsub(%r{(?<numbers>[0-9']*)(?<suit>[mpsz])}) do |_|
+      numbers, suit = $1, $2
+      numbers.split(%r{(?!')}).each do |number|
+        return true if answer == "#{number}#{suit}"
+      end
+    end
+    false
+  end
 end
