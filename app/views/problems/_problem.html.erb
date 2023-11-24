@@ -3,8 +3,8 @@
     <strong class="text-center block font-medium mb-1"><%= problem.title %></strong>
   </p>
 
-  <div class="flex flex-initial w-4/5 mx-auto gap-0.5">
-    <%= display_clickable_tiles(problem.tiles, ' hover:bottom-5 relative ', problem) %>
+  <div class="flex flex-initial mx-auto gap-0.5">
+    <%= display_tiles(problem.tiles, 'w-10') %>
   </div>
 
   <% if action_name != "show" %>

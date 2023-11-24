@@ -1,23 +1,33 @@
 <div class="mx-auto md:w-2/3 w-full flex">
   <div class="mx-auto">
-    <%= render @problem %>
+    <div id="<%= dom_id @problem %>">
+      <p class="my-5">
+        <strong class="text-center block font-medium mb-1"><%= @problem.title %></strong>
+      </p>
+
+      <div class="flex flex-initial mx-auto gap-0.5">
+        <%= display_clickable_tiles(@problem.tiles, ' hover:bottom-5 relative ', @problem) %>
+      </div>
+
+    </div>
 
     <% unless @solved.nil? %>
 
-      <p id="solved-message">
-        <% if @solved %>
-          Correct answer!
-        <% else %>
-          Incorrect answer
-        <% end %>
-      </p>
-
+      <div class="text-center bg-gray-200 rounded-lg w-1/2 mx-auto">
+        <p id="solved-message">
+          <% if @solved %>
+            Correct answer!
+          <% else %>
+            Incorrect answer
+          <% end %>
+        </p>
+      </div>
       <p id="solution" class="my-5">
         <strong class="block font-medium mb-1">Solution:</strong>
         <%= display_tiles(@problem.solution, 'w-10') %>
       </p>
 
-      <p class="my-5">
+      <p id="explanation" class="my-5">
         <strong class="block font-medium mb-1">Explanation:</strong>
         <%= display_tiles(@problem.explanation, 'w-7') %>
       </p>

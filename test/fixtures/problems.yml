@@ -1,9 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: Riichi Book 1 Intro
-  hand: 44m667s123678s 666'z
-  solution: 6p
+  title: "Riichi Book 1: 2-away vs 1-away"
+  hand: 5677m34p45579s666z
+  solution: 7m4s
   explanation: Sample explanation
 
 two:
