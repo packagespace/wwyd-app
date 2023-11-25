@@ -29,10 +29,12 @@
         </p>
       </div>
 
-      <p id="explanation" class="my-5">
+      <div class="my-5">
         <strong class="block font-medium mb-1">Explanation:</strong>
-        <%= display_tiles(@problem.explanation, 'w-7') %>
-      </p>
+        <p id="explanation">
+          <%= display_tiles(@problem.explanation, 'w-7') %>
+        </p>
+      </div>
 
     <% end %>
 

@@ -25,9 +25,11 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
     assert_equal "Correct answer!", css_select("#solved-message").inner_text.strip
 
     assert_not_empty css_select("#solution")
-    assert_not_empty css_select("#explanation")
     assert_equal "7m", css_select("#solution img")[0].attr("alt")
     assert_equal "4s", css_select("#solution img")[1].attr("alt")
     assert_equal "or", css_select("#solution").inner_text.strip
+
+    assert_not_empty css_select("#explanation")
+    assert_equal "Sample explanation", css_select("#explanation").inner_text.strip
   end
 end
