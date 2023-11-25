@@ -116,7 +116,7 @@ module TileDisplayHelper
         "\x01" + tile_label + "\x02"
       )
 
-      replacements << image_tag("tiles/#{tile_image_file}", class: "inline tile bg-contain #{style}")
+      replacements << image_tag("tiles/#{tile_image_file}", class: "inline tile bg-contain #{style}", alt: tile_label)
     end
 
     replacements.each_with_index do |replacement, index|

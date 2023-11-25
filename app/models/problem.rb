@@ -19,4 +19,18 @@ class Problem < ApplicationRecord
     end
     false
   end
+
+  def solution_tiles
+    solution_tiles = self[:solution].gsub(%r{(?<numbers>[0-9']*)(?<suit>[mpsz])}) do |_|
+      result = ''
+      numbers, suit = $1, $2
+      numbers.split(%r{(?!')}).each do |number|
+        result += "#{number}#{suit}"
+      end
+      result
+    end
+
+    solution_tiles.split(%r{(?![mpsz]'?)}).join(" or ")
+  end
 end
+
