@@ -1,7 +1,7 @@
 class Problem < ApplicationRecord
   def tiles
     self[:hand].gsub(%r{(?<numbers>[0-9']*)(?<suit>[mpsz])}) do |_|
-      result = ''
+      result = ""
       numbers, suit = $1, $2
       numbers.split(%r{(?!')}).each do |number|
         result += "#{number}#{suit}"
@@ -22,7 +22,7 @@ class Problem < ApplicationRecord
 
   def solution_tiles
     solution_tiles = self[:solution].gsub(%r{(?<numbers>[0-9']*)(?<suit>[mpsz])}) do |_|
-      result = ''
+      result = ""
       numbers, suit = $1, $2
       numbers.split(%r{(?!')}).each do |number|
         result += "#{number}#{suit}"
@@ -33,4 +33,3 @@ class Problem < ApplicationRecord
     solution_tiles.split(%r{(?![mpsz]'?)}).join(" or ")
   end
 end
-

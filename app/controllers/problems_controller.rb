@@ -1,5 +1,5 @@
 class ProblemsController < ApplicationController
-  before_action :set_problem, only: %i[ show edit update destroy solve]
+  before_action :set_problem, only: %i[show edit update destroy solve]
 
   # GET /problems or /problems.json
   def index
@@ -59,7 +59,6 @@ class ProblemsController < ApplicationController
   end
 
   def solve
-    @problem
     correct = @problem.is_solved_by? params[:selected_tile]
 
     redirect_to problem_url(@problem, solved: correct)

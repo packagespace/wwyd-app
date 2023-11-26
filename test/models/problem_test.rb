@@ -14,9 +14,9 @@ class ProblemTest < ActiveSupport::TestCase
 
   test "should return solution with 'OR' added" do
     # Arrange
-    problem = Problem.new(solution:"7m4s")
+    problem = Problem.new(solution: "7m4s")
 
-    #Act
+    # Act
     solution_tiles = problem.solution_tiles
 
     # Assert
