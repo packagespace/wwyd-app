@@ -1,5 +1,9 @@
 <div class="mx-auto md:w-2/3 w-full flex">
   <div class="mx-auto">
+    <% if notice.present? %>
+      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <% end %>
+
     <div id="<%= dom_id @problem %>">
       <p class="my-5">
         <strong class="text-center block font-medium mb-1"><%= @problem.title %></strong>
@@ -25,7 +29,7 @@
       <div class="my-5">
         <strong class="block font-medium mb-1">Solution:</strong>
         <p id="solution">
-        <%= display_tiles(@problem.solution_tiles, 'w-10') %>
+          <%= display_tiles(@problem.solution_tiles, 'w-10') %>
         </p>
       </div>
 
