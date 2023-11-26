@@ -30,6 +30,6 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
     assert_equal "or", css_select("#solution").inner_text.strip
 
     assert_not_empty css_select("#explanation")
-    assert_equal "Sample explanation", css_select("#explanation").inner_text.strip
+    assert_equal "Discarding  makes the hand 2-away, whereas discarding either  or  makes the hand 1-away. You should thus discard  or  to make the hand 1-away. Reverting a 1-away hand to 2-away makes sense only in some exceptional cases where tile acceptance at 1-away becomes unbearably small (i.e., fewer than 2 kinds). With this hand, the hand will be able to accept 2 (3 kinds–12 tiles) when it becomes 1-away.", css_select("#explanation").inner_text.strip
   end
 end

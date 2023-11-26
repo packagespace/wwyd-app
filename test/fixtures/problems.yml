@@ -4,10 +4,16 @@ one:
   title: "Riichi Book 1: 2-away vs 1-away"
   hand: 5677m34p45579s666z
   solution: 7m4s
-  explanation: Sample explanation
+  explanation: "Discarding 9s makes the hand 2-away, whereas discarding either 7m
+  or 4s makes the hand 1-away. You should thus discard 7m or 4s to
+  make the hand 1-away. Reverting a 1-away hand to 2-away makes
+  sense only in some exceptional cases where tile acceptance at 1-away
+  becomes unbearably small (i.e., fewer than 2 kinds). With this hand,
+  the hand will be able to accept 25p8s (3 kinds–12 tiles) when it
+  becomes 1-away."
 
-two:
-  title: MyString
-  hand: MyString
-  solution: MyString
-  explanation: MyText
+#two:
+#  title: MyString
+#  hand: MyString
+#  solution: MyString
+#  explanation: MyText
