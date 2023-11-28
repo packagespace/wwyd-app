@@ -72,3 +72,5 @@ end
 gem "standard", groups: %i[development test]
 
 gem "standard-rails", groups: %i[development test]
+
+gem "clearance"
