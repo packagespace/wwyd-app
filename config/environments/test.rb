@@ -63,4 +63,6 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
+  config.middleware.use Clearance::BackDoor
 end
