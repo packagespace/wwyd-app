@@ -38,6 +38,15 @@ class ProblemsTest < ApplicationSystemTestCase
     click_on "Back"
   end
 
+  test "solve a Problem" do
+    visit problem_url(@problem)
+    click_on "7m", match: :first
+
+    assert_text "Correct answer!"
+    assert_text "Solution:"
+    assert_text "Explanation:"
+  end
+
   # test "should destroy Problem" do
   #   visit problem_url(@problem)
   #   click_on "Destroy this problem", match: :first
