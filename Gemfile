@@ -74,3 +74,7 @@ gem "standard", groups: %i[development test]
 gem "standard-rails", groups: %i[development test]
 
 gem "clearance"
+
+group :development, :test do
+  gem 'rspec-rails', '~> 6.1.0'
+end
