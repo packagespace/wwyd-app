@@ -8,7 +8,13 @@ class ProblemsController < ApplicationController
 
   # GET /problems/1 or /problems/1.json
   def show
-    @solved = ActiveModel::Type::Boolean.new.cast params[:solved]
+    unless signed_in?
+      solve_ids = session[:solve_ids]
+    end
+    unless @problem.solves.where(id: solve_ids).empty?
+      # todo update this condition
+      @solved = true
+    end
   end
 
   # GET /problems/new

@@ -25,6 +25,10 @@ class SolvesController < ApplicationController
 
     respond_to do |format|
       if @solve.save
+        unless signed_in?
+          (session[:solve_ids] ||= []) << @solve.id
+        end
+
         format.html { redirect_to problem_url(@solve.problem), notice: "Solve was successfully created." }
         format.json { render :show, status: :created, location: @solve }
       else
