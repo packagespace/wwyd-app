@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_28_204628) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_03_141652) do
   create_table "problems", force: :cascade do |t|
     t.string "title"
     t.string "hand"
@@ -18,6 +18,16 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_28_204628) do
     t.text "explanation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "solves", force: :cascade do |t|
+    t.string "tile"
+    t.integer "problem_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["problem_id"], name: "index_solves_on_problem_id"
+    t.index ["user_id"], name: "index_solves_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -32,4 +42,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_28_204628) do
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
   end
 
+  add_foreign_key "solves", "problems"
+  add_foreign_key "solves", "users"
 end
