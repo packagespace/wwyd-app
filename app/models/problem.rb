@@ -1,4 +1,5 @@
 class Problem < ApplicationRecord
+  has_many :solves, dependent: :destroy
   def tiles
     self[:hand].gsub(%r{(?<numbers>[0-9']*)(?<suit>[mpsz])}) do |_|
       result = ""
