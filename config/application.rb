@@ -25,7 +25,8 @@ module WwydApp
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.generators do |g|
-      g.test_framework :test_unit
+      g.test_framework :test_unit, fixtures: true
+      g.factory_bot false
     end
 
   end

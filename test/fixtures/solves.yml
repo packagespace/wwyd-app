@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tile: MyString
+  problem: one
+  user: one
+
+two:
+  tile: MyString
+  problem: two
+  user: two
