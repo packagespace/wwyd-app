@@ -15,12 +15,12 @@ class SolvesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create solve" do
+  test "should create solve and redirect to problem" do
     assert_difference("Solve.count") do
       post solves_url, params: { solve: { problem_id: @solve.problem_id, tile: @solve.tile, user_id: @solve.user_id } }
     end
 
-    assert_redirected_to solve_url(Solve.last)
+    assert_redirected_to problem_url(@solve.problem_id)
   end
 
   test "should show solve" do

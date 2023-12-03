@@ -15,8 +15,13 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
     assert_equal 14, css_select(".tile img").length
     assert_equal 14, css_select("button.tile").length
 
-    post solve_url(@problem),
-      params: {selected_tile: "7m"}
+    post solves_url,
+      params: {
+        solve: {
+          tile: "7m",
+          problem_id: @problem.id
+        }
+      }
     assert_response :redirect
     follow_redirect!
     assert_response :success

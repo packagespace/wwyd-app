@@ -25,7 +25,7 @@ class SolvesController < ApplicationController
 
     respond_to do |format|
       if @solve.save
-        format.html { redirect_to solve_url(@solve), notice: "Solve was successfully created." }
+        format.html { redirect_to problem_url(@solve.problem), notice: "Solve was successfully created." }
         format.json { render :show, status: :created, location: @solve }
       else
         format.html { render :new, status: :unprocessable_entity }

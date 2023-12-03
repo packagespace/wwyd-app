@@ -53,8 +53,8 @@ module TileDisplayHelper
 
       replacements << button_to(
         image_tag("tiles/#{tile_image_file}", alt: tile_label),
-        solve_path,
-        params: {selected_tile: tile_label},
+        solves_url,
+        params: {tile: tile_label},
         class: "inline tile bg-contain #{style} #{tile_label}"
       )
     end
