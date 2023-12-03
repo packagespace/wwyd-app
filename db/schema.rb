@@ -23,7 +23,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_03_141652) do
   create_table "solves", force: :cascade do |t|
     t.string "tile"
     t.integer "problem_id", null: false
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["problem_id"], name: "index_solves_on_problem_id"
