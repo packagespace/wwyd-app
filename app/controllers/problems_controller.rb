@@ -11,9 +11,9 @@ class ProblemsController < ApplicationController
     unless signed_in?
       solve_ids = session[:solve_ids]
     end
-    unless @problem.solves.where(id: solve_ids).empty?
-      # todo update this condition
-      @solved = true
+    solve = Solve.find_by(id: solve_ids, problem: @problem)
+    unless solve.nil?
+      @solved = @problem.is_solved_by?(solve.tile)
     end
   end
 
