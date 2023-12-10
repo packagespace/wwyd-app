@@ -28,6 +28,5 @@ module WwydApp
       g.test_framework :test_unit, fixtures: true
       g.factory_bot false
     end
-
   end
 end

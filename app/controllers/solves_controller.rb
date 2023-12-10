@@ -1,5 +1,5 @@
 class SolvesController < ApplicationController
-  before_action :set_solve, only: %i[ show edit update destroy ]
+  before_action :set_solve, only: %i[show edit update destroy]
 
   # GET /solves or /solves.json
   def index
@@ -23,10 +23,19 @@ class SolvesController < ApplicationController
   def create
     @solve = Solve.new(solve_params)
 
+    solve_ids = session[:solve_ids] ||= []
+    problem = Problem.find(solve_params[:problem_id])
+    unless signed_in? && !solve_ids.nil?
+      unless problem.solves.where(id: solve_ids).empty?
+        head :unprocessable_entity
+        return
+      end
+    end
+
     respond_to do |format|
       if @solve.save
         unless signed_in?
-          (session[:solve_ids] ||= []) << @solve.id
+          solve_ids << @solve.id
         end
 
         format.html { redirect_to problem_url(@solve.problem), notice: "Solve was successfully created." }
@@ -62,13 +71,14 @@ class SolvesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_solve
-      @solve = Solve.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def solve_params
-      params.require(:solve).permit(:tile, :problem_id, :user_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_solve
+    @solve = Solve.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def solve_params
+    params.require(:solve).permit(:tile, :problem_id, :user_id)
+  end
 end
