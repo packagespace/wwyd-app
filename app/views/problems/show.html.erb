@@ -8,10 +8,14 @@
       <p class="my-5">
         <strong class="text-center block font-medium mb-1"><%= @problem.title %></strong>
       </p>
-
-      <div class="flex flex-initial mx-auto gap-0.5">
-        <%= display_clickable_tiles(@problem.tiles, ' hover:bottom-5 relative ', @problem) %>
+      <div class="flex flex-initial gap-0.5 mb-1">
+        <% if @solve.nil? %>
+          <%= display_clickable_tiles(@problem.tiles, 'hover:bottom-5 relative', @problem) %>
+        <% else %>
+          <%= display_tiles_divs(@problem.tiles) %>
+        <% end %>
       </div>
+
 
     </div>
 
