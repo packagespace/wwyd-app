@@ -27,7 +27,7 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     assert_not_empty css_select("#solved-message")
-    assert_equal "Correct answer!", css_select("#solved-message").inner_text.strip
+    assert_equal "7m: Correct answer!", css_select("#solved-message").inner_text.strip
 
     assert_not_empty css_select("#solution")
     assert_equal "7m", css_select("#solution img")[0].attr("alt")
@@ -60,7 +60,7 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     assert_not_empty css_select("#solved-message")
-    assert_equal "Incorrect answer", css_select("#solved-message").inner_text.strip
+    assert_equal "5m: Incorrect answer", css_select("#solved-message").inner_text.strip
 
     assert_not_empty css_select("#solution")
     assert_equal "7m", css_select("#solution img")[0].attr("alt")

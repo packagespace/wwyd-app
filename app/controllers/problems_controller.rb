@@ -15,6 +15,7 @@ class ProblemsController < ApplicationController
     unless solve.nil?
       @solved = @problem.is_solved_by?(solve.tile)
     end
+    @solve = solve
   end
 
   # GET /problems/new

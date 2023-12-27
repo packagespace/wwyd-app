@@ -15,14 +15,14 @@
 
     </div>
 
-    <% unless @solved.nil? %>
+    <% unless @solve.nil? %>
 
       <div class="text-center bg-gray-200 rounded-lg w-1/2 mx-auto">
         <p id="solved-message">
-          <% if @solved %>
-            Correct answer!
+          <% if @problem.is_solved_by? @solve.tile %>
+            <%= @solve.tile %>: Correct answer!
           <% else %>
-            Incorrect answer
+            <%= @solve.tile %>: Incorrect answer
           <% end %>
         </p>
       </div>
