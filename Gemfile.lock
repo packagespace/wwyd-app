@@ -173,6 +173,7 @@ GEM
     nokogiri (1.15.5)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
+    observer (0.1.2)
     parallel (1.23.0)
     parser (3.2.2.4)
       ast (~> 2.4.1)
@@ -335,6 +336,7 @@ DEPENDENCIES
   factory_bot_rails
   importmap-rails
   jbuilder
+  observer (~> 0.1)
   puma (>= 5.0)
   rails (~> 7.1.2)
   rspec-rails (~> 6.1.0)
