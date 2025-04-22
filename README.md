@@ -1,24 +1,11 @@
-# README
+Ruby version: 3.2.0
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Dependencies (ubuntu):
+```shell
+sudo apt-get install chromium-driver
+```
 
-Things you may want to cover:
+Run locally: `bundle install` then `rails server`
 
-* Ruby version
+Tests: `rake test:run` and `rake test:system`
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
