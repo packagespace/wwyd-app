@@ -1,7 +1,9 @@
-Ruby version: 3.2.0
+Ruby version: 3.3.8
 
 Dependencies (ubuntu):
 ```shell
+sudo apt update
+sudo apt install -y pkg-config libsqlite3-dev build-essential
 sudo apt-get install chromium-driver
 ```
 
