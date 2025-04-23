@@ -1,6 +1,6 @@
 class ProblemsController < ApplicationController
+  allow_unauthenticated_access
   before_action :set_problem, only: %i[show edit update destroy solve]
-
   # GET /problems or /problems.json
   def index
     @problems = Problem.all
@@ -8,7 +8,7 @@ class ProblemsController < ApplicationController
 
   # GET /problems/1 or /problems/1.json
   def show
-    unless signed_in?
+    unless authenticated?
       solve_ids = session[:solve_ids]
     end
     solve = Solve.find_by(id: solve_ids, problem: @problem)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_23_174807) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_23_221037) do
   create_table "problems", force: :cascade do |t|
     t.string "title"
     t.string "hand"
@@ -18,6 +18,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_23_174807) do
     t.text "explanation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
   create_table "solves", force: :cascade do |t|
@@ -31,17 +40,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_23_174807) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "email_address", null: false
+    t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "email", null: false
-    t.string "encrypted_password", limit: 128, null: false
-    t.string "confirmation_token", limit: 128
-    t.string "remember_token", limit: 128, null: false
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email"
-    t.index ["remember_token"], name: "index_users_on_remember_token", unique: true
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "sessions", "users"
   add_foreign_key "solves", "problems"
   add_foreign_key "solves", "users"
 end

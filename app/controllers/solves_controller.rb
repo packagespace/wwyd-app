@@ -1,4 +1,5 @@
 class SolvesController < ApplicationController
+  allow_unauthenticated_access
   before_action :set_solve, only: %i[show edit update destroy]
 
   # GET /solves or /solves.json
@@ -25,7 +26,7 @@ class SolvesController < ApplicationController
 
     solve_ids = session[:solve_ids] ||= []
     problem = Problem.find(solve_params[:problem_id])
-    unless signed_in? && !solve_ids.nil?
+    unless authenticated? && !solve_ids.nil?
       unless problem.solves.where(id: solve_ids).empty?
         head :unprocessable_entity
         return
@@ -34,7 +35,7 @@ class SolvesController < ApplicationController
 
     respond_to do |format|
       if @solve.save
-        unless signed_in?
+        unless authenticated?
           solve_ids << @solve.id
         end
 
