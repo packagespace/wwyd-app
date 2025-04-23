@@ -15,11 +15,11 @@
     <main class="container mx-auto mt-28 px-5 flex">
 
 <!--      todo improve layout-->
-<!--      <div id="flash">-->
-        <%# flash.each do |key, value| %>
-<!--          <div class="flash <%#= key %>"><%#= value %></div>-->
-        <%# end %>
-<!--      </div>-->
+      <div id="flash">
+        <% flash.each do |key, value| %>
+          <div class="flash <%= key %>"><%= value %></div>
+        <% end %>
+      </div>
       <% if signed_in? %>
         Signed in as: <%= current_user.email %>
         <%= button_to 'Sign out', sign_out_path, method: :delete %>
