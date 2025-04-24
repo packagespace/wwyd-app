@@ -4,7 +4,7 @@ Dependencies (ubuntu):
 ```shell
 sudo apt update
 sudo apt install -y pkg-config libsqlite3-dev build-essential
-sudo apt-get install chromium-driver
+sudo apt install chromium-driver
 ```
 
 Run locally: `bundle install` then `rails server`
