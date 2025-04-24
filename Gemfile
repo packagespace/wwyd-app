@@ -84,3 +84,7 @@ group :development, :test do
 end
 
 gem "observer"
+
+gem "bundler-audit"
+
+gem "brakeman"
