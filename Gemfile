@@ -78,3 +78,7 @@ gem "observer"
 gem "bundler-audit"
 
 gem "brakeman"
+
+group :development do
+  gem "hotwire-spark"
+end
