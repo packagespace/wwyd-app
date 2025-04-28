@@ -18,7 +18,7 @@
           <%= link_to "WWYD App", root_path, class: "text-xl font-bold" %>
         </div>
         <div class="flex items-center space-x-4">
-          <% if Current.user %>
+          <% if authenticated? %>
             <span class="text-gray-300"><%= Current.user.email_address %></span>
             <%= button_to "Sign out", session_path, method: :delete, class: "bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded" %>
           <% else %>
