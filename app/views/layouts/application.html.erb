@@ -13,11 +13,6 @@
 
   <body>
     <main class="container mx-auto mt-28 px-5 flex">
-      <div id="flash">
-        <% flash.each do |key, value| %>
-          <div class="flash <%= key %>"><%= value %></div>
-        <% end %>
-      </div>
       <%= yield %>
     </main>
   </body>
