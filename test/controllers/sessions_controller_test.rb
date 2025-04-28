@@ -21,11 +21,11 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy session" do
-    # First login
+    # First log in
     sign_in_as users(:one).email_address
     assert_signed_in
 
-    # Then logout
+    # Then log out
     delete session_url
     assert_redirected_to new_session_path
     assert_signed_out
