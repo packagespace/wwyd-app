@@ -24,7 +24,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     # First login
     sign_in_as users(:one).email_address
     assert_signed_in
-    
+
     # Then logout
     delete session_url
     assert_redirected_to new_session_path
