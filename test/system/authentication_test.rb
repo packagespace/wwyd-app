@@ -52,8 +52,8 @@ class AuthenticationTest < ApplicationSystemTestCase
     # Start at sign in page
     visit new_session_path
     
-    # Navigate to sign up page
-    click_link "Sign up"
+    # Navigate to sign up page using the link in the form
+    find("div.mt-6 a", text: "Sign up").click
     assert_current_path new_user_path
     
     # Navigate back to sign in page
