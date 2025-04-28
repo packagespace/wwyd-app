@@ -6,12 +6,12 @@ module AuthenticationTestHelper
   
   # Helper method to assert that a user is signed in
   def assert_signed_in
-    assert session[:session_id].present?, "Expected user to be signed in"
+    assert cookies[:session_id].present? && cookies[:session_id] != "", "Expected user to be signed in"
   end
   
   # Helper method to assert that a user is signed out
   def assert_signed_out
-    assert_nil session[:session_id], "Expected user to be signed out"
+    assert cookies[:session_id].blank?, "Expected user to be signed out"
   end
   
   # Helper method to sign in a user in system tests

@@ -21,7 +21,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
     
     assert_redirected_to root_url
-    assert session[:session_id].present?
+    assert_signed_in
     assert_equal "Account created successfully!", flash[:notice]
   end
 
@@ -37,7 +37,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
     
     assert_response :unprocessable_entity
-    assert_nil session[:session_id]
+    assert_signed_out
   end
 
   test "should not create user with duplicate email" do
@@ -52,6 +52,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
     
     assert_response :unprocessable_entity
-    assert_nil session[:session_id]
+    assert_signed_out
   end
 end

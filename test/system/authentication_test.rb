@@ -56,8 +56,8 @@ class AuthenticationTest < ApplicationSystemTestCase
     find("div.mt-6 a", text: "Sign up").click
     assert_current_path new_user_path
     
-    # Navigate back to sign in page
-    click_link "Sign in"
+    # Navigate back to sign in page using the nav link
+    find("nav a", text: "Sign in").click
     assert_current_path new_session_path
   end
 end
