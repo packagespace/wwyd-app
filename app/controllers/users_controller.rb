@@ -8,7 +8,11 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    # todo handle duplicate email
+    # Handle duplicate email
+    if User.exists?(email_address: @user.email_address)
+      @user.errors.add(:email_address, "is already taken")
+      return render :new, status: :unprocessable_entity
+    end
     
     if @user.save
       start_new_session_for @user
