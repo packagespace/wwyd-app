@@ -1,5 +1,4 @@
 class ProblemsController < ApplicationController
-  #todo restrict this to solving only
   allow_unauthenticated_access
   before_action :set_problem, only: %i[show edit update destroy solve]
   # GET /problems or /problems.json
