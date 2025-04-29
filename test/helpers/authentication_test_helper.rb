@@ -1,8 +1,6 @@
 module AuthenticationTestHelper
-  #todo check this against rails repo
 
   # Helper method to sign in a user in integration tests
-  #todo default param looks wrong
   def sign_in_as(email, password = "password")
     post session_url, params: {email_address: email, password: password}
   end
