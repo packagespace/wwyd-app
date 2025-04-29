@@ -8,7 +8,9 @@ class ProblemsController < ApplicationController
 
   # GET /problems/1 or /problems/1.json
   def show
-    unless authenticated?
+    if authenticated?
+      solve_ids = Current.user.solves.pluck(:id)
+    else
       solve_ids = session[:solve_ids]
     end
     solve = Solve.find_by(id: solve_ids, problem: @problem)

@@ -35,7 +35,10 @@ class SolvesController < ApplicationController
 
     respond_to do |format|
       if @solve.save
-        unless authenticated?
+        if authenticated?
+          @solve.user = Current.user
+          @solve.save
+        else
           solve_ids << @solve.id
         end
 
