@@ -23,25 +23,14 @@ class SolvesController < ApplicationController
   # POST /solves or /solves.json
   def create
     @solve = Solve.new(solve_params)
-
-    solve_ids = session[:solve_ids] ||= []
-    problem = Problem.find(solve_params[:problem_id])
-    unless authenticated? && !solve_ids.nil?
-      unless problem.solves.where(id: solve_ids).empty?
-        head :unprocessable_entity
-        return
-      end
-    end
+    
+    # Check if the user has already submitted a solve for this problem
+    return handle_duplicate_solve if duplicate_solve_exists?
 
     respond_to do |format|
       if @solve.save
-        if authenticated?
-          @solve.user = Current.user
-          @solve.save
-        else
-          solve_ids << @solve.id
-        end
-
+        associate_solve_with_user
+        
         format.html { redirect_to problem_url(@solve.problem), notice: "Solve was successfully created." }
         format.json { render :show, status: :created, location: @solve }
       else
@@ -84,5 +73,30 @@ class SolvesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def solve_params
     params.require(:solve).permit(:tile, :problem_id, :user_id)
+  end
+  
+  # Check if the current user (authenticated or not) has already submitted a solve for this problem
+  def duplicate_solve_exists?
+    return false if authenticated?
+    
+    solve_ids = session[:solve_ids] ||= []
+    problem = Problem.find(solve_params[:problem_id])
+    !problem.solves.where(id: solve_ids).empty?
+  end
+  
+  # Handle the case when a duplicate solve is detected
+  def handle_duplicate_solve
+    head :unprocessable_entity
+  end
+  
+  # Associate the solve with the current user or store it in the session
+  def associate_solve_with_user
+    if authenticated?
+      @solve.user_id = Current.user.id
+      @solve.save!
+    else
+      solve_ids = session[:solve_ids] ||= []
+      solve_ids << @solve.id
+    end
   end
 end

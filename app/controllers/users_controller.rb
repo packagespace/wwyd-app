@@ -14,12 +14,7 @@ class UsersController < ApplicationController
     end
 
     if @user.save
-      # Transfer any solves stored in the session to the new user
-      if session[:solve_ids].present?
-        Solve.where(id: session[:solve_ids]).update_all(user_id: @user.id)
-        session.delete(:solve_ids)
-      end
-      
+      transfer_session_solves_to_user
       start_new_session_for @user
       redirect_to after_authentication_url, notice: "Account created successfully!"
     else
@@ -31,5 +26,13 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email_address, :password, :password_confirmation)
+  end
+  
+  # Transfer any solves stored in the session to the newly created user
+  def transfer_session_solves_to_user
+    return unless session[:solve_ids].present?
+    
+    Solve.where(id: session[:solve_ids]).update_all(user_id: @user.id)
+    session.delete(:solve_ids)
   end
 end
