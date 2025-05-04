@@ -20,8 +20,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       }
     end
 
-    assert_redirected_to root_url
-    assert_signed_in
+    assert_redirected_to new_session_path
     assert_equal "Account created successfully!", flash[:notice]
   end
 
@@ -49,7 +48,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     # Verify the solve is now associated with the new user
-    assert_redirected_to root_url
     solve.reload
     assert_equal User.find_by(email_address: "solve_transfer@example.com").id, solve.user_id
 
@@ -74,8 +72,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     # Verify user is created successfully
-    assert_redirected_to root_url
-    assert_signed_in
+    assert_redirected_to new_session_path
     assert_equal "Account created successfully!", flash[:notice]
   end
 

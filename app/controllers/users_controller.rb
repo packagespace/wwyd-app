@@ -8,15 +8,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    if User.exists?(email_address: @user.email_address)
-      @user.errors.add(:email_address, "is already taken")
-      return render :new, status: :unprocessable_entity
-    end
-
     if @user.save
-      transfer_session_solves_to_user
-      start_new_session_for @user
-      redirect_to after_authentication_url, notice: "Account created successfully!"
+      Solve.where(id: session[:solve_ids] || []).update_all(user_id: @user.id)
+      session.delete(:solve_ids)
+      redirect_to new_session_path, notice: "Account created successfully!"
     else
       render :new, status: :unprocessable_entity
     end
@@ -25,14 +20,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email_address, :password, :password_confirmation)
+    params.expect(user: [:email_address, :password, :password_confirmation])
   end
 
-  # Transfer any solves stored in the session to the newly created user
-  def transfer_session_solves_to_user
-    return if session[:solve_ids].blank?
-
-    Solve.where(id: session[:solve_ids]).update_all(user_id: @user.id)
-    session.delete(:solve_ids)
-  end
 end
