@@ -37,7 +37,6 @@ class ProblemsControllerTest < ActionDispatch::IntegrationTest
     get problem_url(@problem)
     assert_response :success
 
-    # Check that the response contains the expected solve information
     assert_select "[data-testid='solve-tile']", solve.tile
   end
 
