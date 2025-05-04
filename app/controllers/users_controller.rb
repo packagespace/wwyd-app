@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 
   # Transfer any solves stored in the session to the newly created user
   def transfer_session_solves_to_user
-    return unless session[:solve_ids].present?
+    return if session[:solve_ids].blank?
 
     Solve.where(id: session[:solve_ids]).update_all(user_id: @user.id)
     session.delete(:solve_ids)
