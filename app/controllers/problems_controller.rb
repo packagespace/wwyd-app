@@ -8,7 +8,11 @@ class ProblemsController < ApplicationController
 
   # GET /problems/1 or /problems/1.json
   def show
-    @solve = find_user_solve_for_problem
+    if authenticated?
+      @solve = Solve.find_by(user: Current.user, problem: @problem)
+    else
+      @solve = Solve.find_by(id: session[:solve_ids], problem: @problem)
+    end
     unless @solve.nil?
       @solved = @problem.is_solved_by?(@solve.tile)
     end
@@ -72,13 +76,6 @@ class ProblemsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_problem
     @problem = Problem.find(params[:id])
-  end
-
-  # todo find a more elegant way to do this using models. Maybe a method on problems?
-  # Find a solve for the current problem based on user authentication status
-  def find_user_solve_for_problem
-    solve_ids = authenticated? ? Current.user.solves.pluck(:id) : session[:solve_ids]
-    Solve.find_by(id: solve_ids, problem: @problem)
   end
 
   # Only allow a list of trusted parameters through.
