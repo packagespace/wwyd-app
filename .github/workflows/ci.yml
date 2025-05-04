@@ -42,3 +42,9 @@ jobs:
           install-dependencies: true
       - name: Run tests
         run: bin/rails test:all
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: screenshots
+          path: tmp/screenshots
