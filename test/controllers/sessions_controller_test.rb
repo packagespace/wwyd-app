@@ -8,13 +8,15 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create session with valid credentials" do
-    sign_in_as users(:one).email_address
+    assert_difference("Session.count", 1) do
+      post session_url, params: {email_address: users(:one).email_address, password: "password"}
+    end
     assert_redirected_to root_url
     assert_signed_in
   end
 
   test "should not create session with invalid credentials" do
-    sign_in_as users(:one).email_address, "wrong_password"
+    post session_url, params: {email_address: users(:one).email_address, password: "wrong_password"}
     assert_redirected_to new_session_path
     assert_signed_out
     assert_not_nil flash[:alert]
@@ -22,7 +24,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy session" do
     # First log in
-    sign_in_as users(:one).email_address
+    post session_url, params: {email_address: users(:one).email_address, password: "password"}
     assert_signed_in
 
     # Then log out

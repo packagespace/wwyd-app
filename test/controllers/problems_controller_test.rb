@@ -32,8 +32,7 @@ class ProblemsControllerTest < ActionDispatch::IntegrationTest
     user = users(:one)
     sign_in_as(user)
     
-    # Create a solve for this user
-    solve = Solve.create!(problem: @problem, tile: "7m", user: user)
+    solve = solves(:one)
     
     get problem_url(@problem)
     assert_response :success
