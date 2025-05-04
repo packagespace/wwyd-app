@@ -46,7 +46,7 @@ class SolvesControllerTest < ActionDispatch::IntegrationTest
     end
 
     solve = Solve.last
-    assert_not_nil solve.reload.user_id
+    assert_not_nil solve.user_id
     assert_equal user.id, solve.user_id
     assert_nil session[:solve_ids]
   end

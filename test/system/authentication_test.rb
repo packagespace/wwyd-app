@@ -1,5 +1,4 @@
 require "application_system_test_case"
-# todo move these tests and assertions to sessions controller?
 class AuthenticationTest < ApplicationSystemTestCase
   test "user can sign in with valid credentials" do
     system_sign_in_as users(:one).email_address
