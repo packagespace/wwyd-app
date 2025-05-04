@@ -1,5 +1,4 @@
 module AuthenticationTestHelper
-
   def assert_signed_in
     assert cookies[:session_id].present? && cookies[:session_id] != "", "Expected user to be signed in"
   end

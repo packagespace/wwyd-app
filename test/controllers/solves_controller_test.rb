@@ -28,23 +28,23 @@ class SolvesControllerTest < ActionDispatch::IntegrationTest
     assert_difference("Solve.count") do
       post solves_url, params: {solve: {problem_id: @problem.id, tile: "7m"}}
     end
-    
+
     assert_redirected_to problem_url(@problem)
-    
+
     # Verify the solve ID is stored in session
     solve = Solve.last
     assert_includes session[:solve_ids], solve.id
     assert_nil solve.user_id
   end
-  
+
   test "should associate solve with current user when authenticated" do
     user = users(:one)
     sign_in_as(user)
-    
+
     assert_difference("Solve.count") do
       post solves_url, params: {solve: {problem_id: @problem.id, tile: "7m"}}
     end
-    
+
     solve = Solve.last
     assert_not_nil solve.reload.user_id
     assert_equal user.id, solve.user_id

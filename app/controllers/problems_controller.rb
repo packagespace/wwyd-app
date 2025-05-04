@@ -74,7 +74,7 @@ class ProblemsController < ApplicationController
     @problem = Problem.find(params[:id])
   end
 
-  #todo find a more elegant way to do this using models. Maybe a method on problems?
+  # todo find a more elegant way to do this using models. Maybe a method on problems?
   # Find a solve for the current problem based on user authentication status
   def find_user_solve_for_problem
     solve_ids = authenticated? ? Current.user.solves.pluck(:id) : session[:solve_ids]

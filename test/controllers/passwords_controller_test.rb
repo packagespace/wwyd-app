@@ -12,7 +12,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create password reset" do
-    post passwords_url, params: { email_address: @user.email_address }
+    post passwords_url, params: {email_address: @user.email_address}
 
     assert_enqueued_email_with PasswordsMailer, :reset, args: [@user]
 
@@ -21,7 +21,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not reveal if email address doesn't exist" do
-    post passwords_url, params: { email_address: "nonexistent@example.com" }
+    post passwords_url, params: {email_address: "nonexistent@example.com"}
     assert_redirected_to new_session_path
     assert_equal "Password reset instructions sent (if user with that email address exists).", flash[:notice]
     assert_no_emails
@@ -30,7 +30,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   test "should get edit with valid token" do
     user = users(:one)
     token = user.generate_token_for(:password_reset)
-    
+
     get edit_password_url(token)
     assert_response :success
     assert_select "h1", "Update your password"
@@ -45,11 +45,11 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   test "should update password with valid token and matching passwords" do
     user = users(:one)
     token = user.generate_token_for(:password_reset)
-    
-    patch password_url(token), params: { password: "newpassword", password_confirmation: "newpassword" }
+
+    patch password_url(token), params: {password: "newpassword", password_confirmation: "newpassword"}
     assert_redirected_to new_session_path
     assert_equal "Password has been reset.", flash[:notice]
-    
+
     # Verify the password was actually changed
     user.reload
     assert user.authenticate("newpassword")
@@ -58,8 +58,8 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   test "should not update password with mismatched passwords" do
     user = users(:one)
     token = user.generate_token_for(:password_reset)
-    
-    patch password_url(token), params: { password: "newpassword", password_confirmation: "different" }
+
+    patch password_url(token), params: {password: "newpassword", password_confirmation: "different"}
     assert_redirected_to edit_password_path(token)
     assert_equal "Passwords did not match.", flash[:alert]
   end
