@@ -8,10 +8,10 @@ class ProblemsController < ApplicationController
 
   # GET /problems/1 or /problems/1.json
   def show
-    if authenticated?
-      @solve = Solve.find_by(user: Current.user, problem: @problem)
+    @solve = if authenticated?
+      Solve.find_by(user: Current.user, problem: @problem)
     else
-      @solve = Solve.find_by(id: session[:solve_ids], problem: @problem)
+      Solve.find_by(id: session[:solve_ids], problem: @problem)
     end
     unless @solve.nil?
       @solved = @problem.is_solved_by?(@solve.tile)

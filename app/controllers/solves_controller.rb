@@ -27,9 +27,9 @@ class SolvesController < ApplicationController
     if authenticated?
       return head :conflict if Solve.exists?(user: Current.user, problem: @solve.problem)
       @solve.user = Current.user
-    else
-      return head :conflict if Solve.exists?(id: session[:solve_ids], problem: @solve.problem)
-     end
+    elsif Solve.exists?(id: session[:solve_ids], problem: @solve.problem)
+      return head :conflict
+    end
 
     respond_to do |format|
       if @solve.save
