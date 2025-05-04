@@ -1,6 +1,6 @@
 require "test_helper"
 
-class UserFlowsTest < ActionDispatch::IntegrationTest
+class SolveFlowsTest < ActionDispatch::IntegrationTest
   setup do
     @problem = problems(:one)
   end

@@ -28,6 +28,30 @@ class ProblemsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should show problem with solve for authenticated user" do
+    user = users(:one)
+    sign_in_as(user)
+
+    solve = solves(:one)
+
+    get problem_url(@problem)
+    assert_response :success
+
+    assert_select "[data-testid='solve-tile']", solve.tile
+  end
+
+  test "should show problem with solve for unauthenticated user" do
+    # Create a solve and store it in session
+    post solves_url, params: {solve: {problem_id: @problem.id, tile: "7m"}}
+    solve = Solve.last
+
+    get problem_url(@problem)
+    assert_response :success
+
+    # Check that the response contains the expected solve information
+    assert_select "[data-testid='solve-tile']", solve.tile
+  end
+
   test "should get edit" do
     get edit_problem_url(@problem)
     assert_response :success

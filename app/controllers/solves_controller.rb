@@ -1,4 +1,5 @@
 class SolvesController < ApplicationController
+  allow_unauthenticated_access
   before_action :set_solve, only: %i[show edit update destroy]
 
   # GET /solves or /solves.json
@@ -23,21 +24,16 @@ class SolvesController < ApplicationController
   def create
     @solve = Solve.new(solve_params)
 
-    solve_ids = session[:solve_ids] ||= []
-    problem = Problem.find(solve_params[:problem_id])
-    unless signed_in? && !solve_ids.nil?
-      unless problem.solves.where(id: solve_ids).empty?
-        head :unprocessable_entity
-        return
-      end
+    if authenticated?
+      return head :conflict if Solve.exists?(user: Current.user, problem: @solve.problem)
+      @solve.user = Current.user
+    elsif Solve.exists?(id: session[:solve_ids], problem: @solve.problem)
+      return head :conflict
     end
 
     respond_to do |format|
       if @solve.save
-        unless signed_in?
-          solve_ids << @solve.id
-        end
-
+        associate_solve_with_user
         format.html { redirect_to problem_url(@solve.problem), notice: "Solve was successfully created." }
         format.json { render :show, status: :created, location: @solve }
       else
@@ -79,6 +75,16 @@ class SolvesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def solve_params
-    params.require(:solve).permit(:tile, :problem_id, :user_id)
+    params.expect(solve: [:tile, :problem_id])
+  end
+
+  def associate_solve_with_user
+    if authenticated?
+      @solve.user_id = Current.user.id
+      @solve.save!
+    else
+      solve_ids = session[:solve_ids] ||= []
+      solve_ids << @solve.id
+    end
   end
 end
