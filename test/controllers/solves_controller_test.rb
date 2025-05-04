@@ -38,7 +38,7 @@ class SolvesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should associate solve with current user when authenticated" do
-    user = users(:one)
+    user = users(:two)
     sign_in_as(user)
 
     assert_difference("Solve.count") do
@@ -51,13 +51,14 @@ class SolvesControllerTest < ActionDispatch::IntegrationTest
     assert_nil session[:solve_ids]
   end
 
+  #todo add same test for authenticated user
   test "should not allow to create multiple solves" do
     post solves_url, params: {solve: {problem_id: @solve.problem_id, tile: @solve.tile, user_id: @solve.user_id}}
     assert_difference("Solve.count", 0) do
       post solves_url, params: {solve: {problem_id: @solve.problem_id, tile: @solve.tile, user_id: @solve.user_id}}
     end
 
-    assert_response(:unprocessable_entity)
+    assert_response(:conflict)
   end
 
   test "should show solve" do

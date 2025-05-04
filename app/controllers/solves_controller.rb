@@ -24,8 +24,11 @@ class SolvesController < ApplicationController
   def create
     @solve = Solve.new(solve_params)
 
-    # Check if the user has already submitted a solve for this problem
-    return handle_duplicate_solve if duplicate_solve_exists?
+    if authenticated?
+      return head :conflict if Solve.exists?(user: Current.user, problem: @solve.problem)
+    else
+      return head :conflict if Solve.exists?(id: session[:solve_ids], problem: @solve.problem)
+    end
 
     respond_to do |format|
       if @solve.save
@@ -82,11 +85,6 @@ class SolvesController < ApplicationController
     solve_ids = session[:solve_ids] ||= []
     problem = Problem.find(solve_params[:problem_id])
     !problem.solves.where(id: solve_ids).empty?
-  end
-
-  # Handle the case when a duplicate solve is detected
-  def handle_duplicate_solve
-    head :unprocessable_entity
   end
 
   # Associate the solve with the current user or store it in the session
