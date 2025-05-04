@@ -28,8 +28,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "should transfer session solves to new user" do
     # Create a solve without a user and store it in the session
     problem = problems(:one)
-    post solves_url, params: {solve: {problem_id: problem.id, tile: "7m"}}
-
+    assert_difference("Solve.count", 1) do
+      post solves_url, params: {solve: {problem_id: problem.id, tile: "7m"}}
+    end
     # Verify the solve is created and stored in session
     assert_response :redirect
     solve = Solve.last

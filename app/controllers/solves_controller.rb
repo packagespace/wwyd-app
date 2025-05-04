@@ -26,14 +26,14 @@ class SolvesController < ApplicationController
 
     if authenticated?
       return head :conflict if Solve.exists?(user: Current.user, problem: @solve.problem)
+      @solve.user = Current.user
     else
       return head :conflict if Solve.exists?(id: session[:solve_ids], problem: @solve.problem)
-    end
+     end
 
     respond_to do |format|
       if @solve.save
         associate_solve_with_user
-
         format.html { redirect_to problem_url(@solve.problem), notice: "Solve was successfully created." }
         format.json { render :show, status: :created, location: @solve }
       else
@@ -75,19 +75,9 @@ class SolvesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def solve_params
-    params.require(:solve).permit(:tile, :problem_id, :user_id)
+    params.expect(solve: [:tile, :problem_id])
   end
 
-  # Check if the current user (authenticated or not) has already submitted a solve for this problem
-  def duplicate_solve_exists?
-    return false if authenticated?
-
-    solve_ids = session[:solve_ids] ||= []
-    problem = Problem.find(solve_params[:problem_id])
-    !problem.solves.where(id: solve_ids).empty?
-  end
-
-  # Associate the solve with the current user or store it in the session
   def associate_solve_with_user
     if authenticated?
       @solve.user_id = Current.user.id
