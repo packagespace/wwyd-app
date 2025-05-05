@@ -33,7 +33,7 @@ class AuthenticationTest < ApplicationSystemTestCase
 
     click_button "Sign out"
 
-    assert_current_path new_session_path
+    assert_current_path root_path
     assert_text "Sign in"
     assert_text "Sign up"
     assert_no_text users(:one).email_address
