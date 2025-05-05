@@ -22,10 +22,10 @@ module SessionTestHelper
   end
 
   # Helper method to sign in a user in system tests
-  def system_sign_in_as(email, password = "password")
+  def system_sign_in_as(user)
     visit new_session_path
-    fill_in "email_address", with: email
-    fill_in "password", with: password
+    fill_in "email_address", with: user.email_address
+    fill_in "password", with: "password"
     click_button "Sign in"
   end
 end

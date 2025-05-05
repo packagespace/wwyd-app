@@ -1,7 +1,7 @@
 require "application_system_test_case"
 class AuthenticationTest < ApplicationSystemTestCase
   test "user can sign in with valid credentials" do
-    system_sign_in_as users(:one).email_address
+    system_sign_in_as users(:one)
 
     assert_current_path root_path
 
@@ -12,7 +12,10 @@ class AuthenticationTest < ApplicationSystemTestCase
   end
 
   test "user cannot sign in with invalid credentials" do
-    system_sign_in_as users(:one).email_address, "wrong_password"
+    visit new_session_path
+    fill_in "email_address", with: users(:one).email_address
+    fill_in "password", with: "wrong_password"
+    click_button "Sign in"
 
     assert_current_path new_session_path
 
@@ -24,7 +27,7 @@ class AuthenticationTest < ApplicationSystemTestCase
   end
 
   test "user can sign out" do
-    system_sign_in_as users(:one).email_address
+    system_sign_in_as users(:one)
 
     assert_text users(:one).email_address
 

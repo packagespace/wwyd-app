@@ -11,6 +11,7 @@ class ProblemsTest < ApplicationSystemTestCase
   end
 
   test "should create problem" do
+    system_sign_in_as users(:one)
     visit problems_url
     click_on "New problem"
 
@@ -25,6 +26,7 @@ class ProblemsTest < ApplicationSystemTestCase
   end
 
   test "should update Problem" do
+    system_sign_in_as users(:one)
     visit problem_url(@problem)
     click_on "Edit this problem", match: :first
 
