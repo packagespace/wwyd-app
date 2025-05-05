@@ -36,7 +36,7 @@ class ProblemsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to new_session_path
-    end
+  end
 
   test "should show problem" do
     get problem_url(@problem)
@@ -72,7 +72,7 @@ class ProblemsControllerTest < ActionDispatch::IntegrationTest
     get edit_problem_url(@problem)
     assert_response :success
   end
-  
+
   test "should not get edit when unauthenticated" do
     get edit_problem_url(@problem)
     assert_redirected_to new_session_path
@@ -96,7 +96,7 @@ class ProblemsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to problems_url
-    end
+  end
 
   test "should not destroy problem when unauthenticated" do
     assert_no_difference("Problem.count") do
