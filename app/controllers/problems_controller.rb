@@ -1,6 +1,6 @@
 class ProblemsController < ApplicationController
-  allow_unauthenticated_access
-  before_action :set_problem, only: %i[show edit update destroy solve]
+  allow_unauthenticated_access only: %i[index show]
+  before_action :set_problem, only: %i[show edit update destroy]
   # GET /problems or /problems.json
   def index
     @problems = Problem.all
@@ -63,12 +63,6 @@ class ProblemsController < ApplicationController
       format.html { redirect_to problems_url, notice: "Problem was successfully destroyed." }
       format.json { head :no_content }
     end
-  end
-
-  def solve
-    correct = @problem.is_solved_by? params[:selected_tile]
-
-    redirect_to problem_url(@problem, solved: correct)
   end
 
   private
