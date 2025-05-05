@@ -23,7 +23,7 @@ jobs:
       - name: Security audit application code
         run: bin/brakeman -q -w2
       - name: Standard Ruby
-        uses: packagespace/standard-ruby-action@v1.0.1
+        uses: packagespace/standard-ruby-action@v1.0.2
   test:
     needs: lint
     runs-on: ubuntu-latest
