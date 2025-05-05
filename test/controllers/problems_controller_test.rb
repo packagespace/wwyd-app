@@ -105,7 +105,4 @@ class ProblemsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to new_session_path
   end
-
-
-
 end
