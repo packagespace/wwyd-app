@@ -12,6 +12,7 @@ class ProblemsTest < ApplicationSystemTestCase
 
   test "should create problem" do
     system_sign_in_as users(:one)
+    assert_text "Signed in successfully"
     visit problems_url
     click_on "New problem"
 
@@ -27,6 +28,7 @@ class ProblemsTest < ApplicationSystemTestCase
 
   test "should update Problem" do
     system_sign_in_as users(:one)
+    assert_text "Signed in successfully"
     visit problem_url(@problem)
     click_on "Edit this problem", match: :first
 
