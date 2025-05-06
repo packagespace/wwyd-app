@@ -18,7 +18,7 @@ class SolvesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create solve and redirect to problem" do
     assert_difference("Solve.count") do
-      post solves_url, params: {solve: {problem_id: @solve.problem_id, tile: @solve.tile, user_id: @solve.user_id}}
+      post solves_url, params: { solve: { problem_id: @solve.problem_id, tile: @solve.tile, user_id: @solve.user_id } }
     end
 
     assert_redirected_to problem_url(@solve.problem_id)
@@ -26,7 +26,7 @@ class SolvesControllerTest < ActionDispatch::IntegrationTest
 
   test "should store solve in session for unauthenticated user" do
     assert_difference("Solve.count") do
-      post solves_url, params: {solve: {problem_id: @problem.id, tile: "7m"}}
+      post solves_url, params: { solve: { problem_id: @problem.id, tile: "7m" } }
     end
 
     assert_redirected_to problem_url(@problem)
@@ -42,7 +42,7 @@ class SolvesControllerTest < ActionDispatch::IntegrationTest
     sign_in_as(user)
 
     assert_difference("Solve.count") do
-      post solves_url, params: {solve: {problem_id: @problem.id, tile: "7m"}}
+      post solves_url, params: { solve: { problem_id: @problem.id, tile: "7m" } }
     end
 
     solve = Solve.last
@@ -53,9 +53,9 @@ class SolvesControllerTest < ActionDispatch::IntegrationTest
 
   # todo add same test for authenticated user
   test "should not allow to create multiple solves" do
-    post solves_url, params: {solve: {problem_id: @solve.problem_id, tile: @solve.tile, user_id: @solve.user_id}}
+    post solves_url, params: { solve: { problem_id: @solve.problem_id, tile: @solve.tile, user_id: @solve.user_id } }
     assert_difference("Solve.count", 0) do
-      post solves_url, params: {solve: {problem_id: @solve.problem_id, tile: @solve.tile, user_id: @solve.user_id}}
+      post solves_url, params: { solve: { problem_id: @solve.problem_id, tile: @solve.tile, user_id: @solve.user_id } }
     end
 
     assert_response(:conflict)
@@ -72,7 +72,7 @@ class SolvesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update solve" do
-    patch solve_url(@solve), params: {solve: {problem_id: @solve.problem_id, tile: @solve.tile, user_id: @solve.user_id}}
+    patch solve_url(@solve), params: { solve: { problem_id: @solve.problem_id, tile: @solve.tile, user_id: @solve.user_id } }
     assert_redirected_to solve_url(@solve)
   end
 

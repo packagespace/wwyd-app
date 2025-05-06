@@ -5,7 +5,7 @@ class RegistrationFlowTest < ActionDispatch::IntegrationTest
     # Create a solve without a user and store it in the session
     problem = problems(:one)
     assert_difference("Solve.count", 1) do
-      post solves_url, params: {solve: {problem_id: problem.id, tile: "7m"}}
+      post solves_url, params: { solve: { problem_id: problem.id, tile: "7m" } }
     end
     # Verify the solve is created and stored in session
     assert_response :redirect
