@@ -24,7 +24,7 @@ class ProblemsControllerTest < ActionDispatch::IntegrationTest
   test "should create problem" do
     sign_in_as(users(:one))
     assert_difference("Problem.count") do
-      post problems_url, params: {problem: {explanation: @problem.explanation, hand: @problem.hand, solution: @problem.solution, title: @problem.title}}
+      post problems_url, params: { problem: { explanation: @problem.explanation, hand: @problem.hand, solution: @problem.solution, title: @problem.title } }
     end
 
     assert_redirected_to problem_url(Problem.last)
@@ -32,7 +32,7 @@ class ProblemsControllerTest < ActionDispatch::IntegrationTest
 
   test "should not create problem when unauthenticated" do
     assert_no_difference("Problem.count") do
-      post problems_url, params: {problem: {explanation: @problem.explanation, hand: @problem.hand, solution: @problem.solution, title: @problem.title}}
+      post problems_url, params: { problem: { explanation: @problem.explanation, hand: @problem.hand, solution: @problem.solution, title: @problem.title } }
     end
 
     assert_redirected_to new_session_path
@@ -57,7 +57,7 @@ class ProblemsControllerTest < ActionDispatch::IntegrationTest
 
   test "should show problem with solve for unauthenticated user" do
     # Create a solve and store it in session
-    post solves_url, params: {solve: {problem_id: @problem.id, tile: "7m"}}
+    post solves_url, params: { solve: { problem_id: @problem.id, tile: "7m" } }
     solve = Solve.last
 
     get problem_url(@problem)
@@ -80,12 +80,12 @@ class ProblemsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update problem" do
     sign_in_as users(:one)
-    patch problem_url(@problem), params: {problem: {explanation: @problem.explanation, hand: @problem.hand, solution: @problem.solution, title: @problem.title}}
+    patch problem_url(@problem), params: { problem: { explanation: @problem.explanation, hand: @problem.hand, solution: @problem.solution, title: @problem.title } }
     assert_redirected_to problem_url(@problem)
   end
 
   test "should not update problem when unauthenticated" do
-    patch problem_url(@problem), params: {problem: {explanation: @problem.explanation, hand: @problem.hand, solution: @problem.solution, title: @problem.title}}
+    patch problem_url(@problem), params: { problem: { explanation: @problem.explanation, hand: @problem.hand, solution: @problem.solution, title: @problem.title } }
     assert_redirected_to new_session_path
   end
 
