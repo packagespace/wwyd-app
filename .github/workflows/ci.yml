@@ -103,6 +103,9 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Install Kamal
+        run: gem install kamal -v 2.5
+
       - name: Configure SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
