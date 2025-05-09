@@ -91,7 +91,7 @@ jobs:
 
   deploy:
     needs: [test, lint, scan_ruby, scan_js]
-#    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
