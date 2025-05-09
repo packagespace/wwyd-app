@@ -1,3 +1,5 @@
+![img.png](img.png)
+
 Ruby version: 3.3.8
 
 Dependencies (ubuntu):
@@ -7,11 +9,8 @@ sudo apt install -y pkg-config libsqlite3-dev build-essential
 sudo apt install chromium-driver
 ```
 
-Run locally: `bundle install` then `rails server`
+Run locally: `bundle install` then `bin/dev`
 
-Tests: `rake test:run` and `rake test:system`
-
-TODO:
-- List features needed for first public version
+Tests: `bin/rails test:all`
 
 Tile graphics: [FluffyStuff/riichi-mahjong-tiles](https://github.com/FluffyStuff/riichi-mahjong-tiles)
