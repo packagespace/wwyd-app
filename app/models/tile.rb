@@ -6,7 +6,7 @@ class Tile
   attribute :suit, :string
 
   VALID_SUITS = %w[m p s z].freeze
-  VALID_SUIT_TILE_NUMBERS = 1..9.freeze
+  VALID_NUMBERED_TILE_NUMBERS = (1..9).freeze
   VALID_HONOR_TILE_NUMBERS = 0..7.freeze
 
   validates :suit,
@@ -14,8 +14,8 @@ class Tile
             inclusion: { in: VALID_SUITS, allow_blank: true }
   validates :number,
             presence: true,
-            inclusion: { in: VALID_SUIT_TILE_NUMBERS, message: "must be in range 1..9 for suit tiles", allow_blank: true },
-            if: :suit_tile
+            inclusion: { in: VALID_NUMBERED_TILE_NUMBERS, message: "must be in range 1..9 for numbered tiles", allow_blank: true },
+            if: :numbered_tile
   validates :number,
             presence: true,
             inclusion: { in: VALID_HONOR_TILE_NUMBERS, message: "must be in range 0..7 for honor tiles", allow_blank: true },
@@ -26,14 +26,15 @@ class Tile
   end
 
   def ==(other)
+    return false unless other.is_a?(Tile)
     number == other.number && suit == other.suit
   end
 
   private
 
-  def suit_tile
+  def numbered_tile
     suit.in?(%w[m p s])
-    end
+  end
 
   def honor_tile
     suit == "z"

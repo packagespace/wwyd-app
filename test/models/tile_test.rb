@@ -1,22 +1,24 @@
 require "test_helper"
 
 class TileTest < ActiveSupport::TestCase
-  test "should create valid regular number tiles" do
-    assert Tile.new(number: 1, suit: "m").valid?
-    assert Tile.new(number: 5, suit: "p").valid?
-    assert Tile.new(number: 9, suit: "s").valid?
+  test "should create valid numbered tiles" do
+    (1..9).each do |n|
+      %w[m p s].each do |suit|
+        assert Tile.new(number: n, suit: suit).valid?
+      end
+    end
   end
 
   test "should create valid honor tiles" do
-    (1..7).each do |n|
+    (0..7).each do |n|
       assert Tile.new(number: n, suit: "z").valid?
     end
   end
 
-  test "should be invalid for invalid number in number suits" do
+  test "should be invalid for invalid number in numbered suits" do
     tile = Tile.new(number: 0, suit: "m")
     refute tile.valid?
-    assert_includes tile.errors[:number], "must be in range 1..9 for suit tiles"
+    assert_includes tile.errors[:number], "must be in range 1..9 for numbered tiles"
   end
 
   test "should be invalid for invalid number in honor suit" do
@@ -38,6 +40,7 @@ class TileTest < ActiveSupport::TestCase
 
     assert_equal tile1, tile2
     refute_equal tile1, tile3
+    refute_equal tile1, false
   end
 
   test "should convert to string correctly" do
