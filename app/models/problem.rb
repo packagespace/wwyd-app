@@ -7,11 +7,11 @@ class Problem < ApplicationRecord
 
 
   def hand_tiles
-    parse_tiles(hand)
+    parse_tiles(hand_notation)
   end
 
   def solution_tiles
-    parse_tiles(solution)
+    parse_tiles(solution_notation)
   end
 
   private

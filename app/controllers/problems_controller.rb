@@ -74,6 +74,6 @@ class ProblemsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def problem_params
-    params.require(:problem).permit(:title, :hand, :solution, :explanation)
+    params.require(:problem).permit(:title, :hand_notation, :solution_notation, :explanation)
   end
 end

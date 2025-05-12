@@ -2,7 +2,7 @@ require "test_helper"
 
 class ProblemTest < ActiveSupport::TestCase
   test "should return hand tiles with suits added" do
-    problem = Problem.new(hand: "44m667p123678s666z", solution: "6p")
+    problem = Problem.new(hand_notation: "44m667p123678s666z", solution_notation: "6p")
 
     hand_tiles = problem.hand_tiles
 
@@ -27,7 +27,7 @@ class ProblemTest < ActiveSupport::TestCase
   end
 
   test "should return solution tiles with 'OR' added" do
-    problem = Problem.new(hand: "5677m34p45579s666z", solution: "7m4s")
+    problem = Problem.new(hand_notation: "5677m34p45579s666z", solution_notation: "7m4s")
 
     solution_tiles = problem.solution_tiles
 
@@ -40,7 +40,7 @@ class ProblemTest < ActiveSupport::TestCase
   end
 
   test "should return hand tiles in original order" do
-    problem = Problem.new(hand: "2p343s44455z111m22p", solution: "3s")
+    problem = Problem.new(hand_notation: "2p343s44455z111m22p", solution_notation: "3s")
 
     hand_tiles = problem.hand_tiles
 
@@ -65,7 +65,7 @@ class ProblemTest < ActiveSupport::TestCase
   end
 
   test "should return hand tiles when given longhand format" do
-    problem = Problem.new(hand: "1m2m3m4m5p6p7p8p9s9s1z1z2z2z", solution: "9s")
+    problem = Problem.new(hand_notation: "1m2m3m4m5p6p7p8p9s9s1z1z2z2z", solution_notation: "9s")
 
     hand_tiles = problem.hand_tiles
 
