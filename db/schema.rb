@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_12_203802) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_12_204757) do
   create_table "problems", force: :cascade do |t|
     t.string "title"
     t.string "hand_notation"
@@ -30,7 +30,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_12_203802) do
   end
 
   create_table "solves", force: :cascade do |t|
-    t.string "tile"
+    t.string "tile_notation"
     t.integer "problem_id", null: false
     t.integer "user_id"
     t.datetime "created_at", null: false

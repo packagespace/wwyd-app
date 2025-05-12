@@ -17,8 +17,8 @@ class ProblemsTest < ApplicationSystemTestCase
     click_on "New problem"
 
     fill_in "Explanation", with: @problem.explanation
-    fill_in "Hand ", with: @problem.hand_notation
-    fill_in "Solution", with: @problem.solution_notation
+    fill_in "Hand notation", with: @problem.hand_notation
+    fill_in "Solution notation", with: @problem.solution_notation
     fill_in "Title", with: @problem.title
     click_on "Create Problem"
 
@@ -33,8 +33,8 @@ class ProblemsTest < ApplicationSystemTestCase
     click_on "Edit this problem", match: :first
 
     fill_in "Explanation", with: @problem.explanation
-    fill_in "Hand", with: @problem.hand_notation
-    fill_in "Solution", with: @problem.solution_notation
+    fill_in "Hand notation", with: @problem.hand_notation
+    fill_in "Solution notation", with: @problem.solution_notation
     fill_in "Title", with: @problem.title
     click_on "Update Problem"
 
