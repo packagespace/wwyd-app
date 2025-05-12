@@ -1,18 +1,15 @@
 class Problem < ApplicationRecord
   has_many :solves, dependent: :destroy
-  def tiles
-    self[:hand].gsub(%r{(?<numbers>[0-9']*)(?<suit>[mpsz])}) do |_|
-      result = ""
-      numbers, suit = $1, $2
-      numbers.split(%r{(?!')}).each do |number|
-        result += "#{number}#{suit}"
-      end
-      result
-    end
+  attribute :hand_tiles
+  attribute :solution_tiles
+  after_initialize :parse_hand_tiles, :parse_solution_tiles
+
+  def hand_tiles_to_s
+    hand_tiles.join
   end
 
   def is_solved_by?(answer)
-    self[:solution].gsub(%r{(?<numbers>[0-9']*)(?<suit>[mpsz])}) do |_|
+    solution.gsub(%r{(?<numbers>[0-9']*)(?<suit>[mpsz])}) do |_|
       numbers, suit = $1, $2
       numbers.split(%r{(?!')}).each do |number|
         return true if answer == "#{number}#{suit}"
@@ -21,16 +18,24 @@ class Problem < ApplicationRecord
     false
   end
 
-  def solution_tiles
-    solution_tiles = self[:solution].gsub(%r{(?<numbers>[0-9']*)(?<suit>[mpsz])}) do |_|
-      result = ""
-      numbers, suit = $1, $2
-      numbers.split(%r{(?!')}).each do |number|
-        result += "#{number}#{suit}"
-      end
-      result
+  def solution_tiles_to_s
+    self.solution_tiles.join(" or ")
+  end
+
+  private
+  def parse_hand_tiles
+    self.hand_tiles = parse_tiles(hand)
     end
 
-    solution_tiles.split(%r{(?![mpsz]'?)}).join(" or ")
+  def parse_solution_tiles
+    self.solution_tiles = parse_tiles(solution)
+  end
+
+  def parse_tiles(input)
+    input.scan(/([1-9]+)([mpsz])/).map do |numbers, suit|
+      numbers.chars.map do |number|
+        Tile.new(number: number.to_i, suit: suit)
+      end
+    end
   end
 end
