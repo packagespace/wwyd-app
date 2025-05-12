@@ -23,7 +23,7 @@
 
       <div class="text-center bg-gray-200 rounded-lg w-1/2 mx-auto">
         <p id="solved-message">
-          <% if @problem.is_solved_by? @solve.tile %>
+          <% if @solved_successfully %>
             <span data-testid="solve-tile"><%= @solve.tile %></span>: Correct answer!
           <% else %>
             <span data-testid="solve-tile"><%= @solve.tile %></span>: Incorrect answer

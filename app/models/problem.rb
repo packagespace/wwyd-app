@@ -1,14 +1,9 @@
 class Problem < ApplicationRecord
   has_many :solves, dependent: :destroy
 
-  def is_solved_by?(answer)
-    solution.gsub(%r{(?<numbers>[0-9']*)(?<suit>[mpsz])}) do |_|
-      numbers, suit = $1, $2
-      numbers.split(%r{(?!')}).each do |number|
-        return true if answer == "#{number}#{suit}"
-      end
-    end
-    false
+  def is_solved_by?(tile)
+    tile_obj = Tile.new(number: tile[0], suit: tile[1])
+    tile_obj.in? solution_tiles
   end
 
 

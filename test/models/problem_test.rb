@@ -6,8 +6,6 @@ class ProblemTest < ActiveSupport::TestCase
 
     hand_tiles = problem.hand_tiles
 
-    p hand_tiles
-
     expected_tiles = [
       Tile.new(number: 4, suit: "m"),
       Tile.new(number: 4, suit: "m"),
