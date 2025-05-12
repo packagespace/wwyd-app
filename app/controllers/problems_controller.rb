@@ -14,7 +14,7 @@ class ProblemsController < ApplicationController
       Solve.find_by(id: session[:solve_ids], problem: @problem)
     end
     unless @solve.nil?
-      @solved_successfully = @problem.is_solved_by?(@solve.tile)
+      @solved_successfully = @problem.is_solved_by?(@solve.to_tile)
     end
   end
 

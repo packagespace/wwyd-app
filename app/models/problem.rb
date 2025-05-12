@@ -2,8 +2,7 @@ class Problem < ApplicationRecord
   has_many :solves, dependent: :destroy
 
   def is_solved_by?(tile)
-    tile_obj = Tile.new(number: tile[0], suit: tile[1])
-    tile_obj.in? solution_tiles
+    tile.in? solution_tiles
   end
 
 
