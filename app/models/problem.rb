@@ -17,7 +17,7 @@ class Problem < ApplicationRecord
   private
   def parse_tiles(input)
     input
-      .scan(/(?<numbers>[1-9]+)(?<suit>[mpsz])/)
+      .scan(/(?<numbers>[0-9]+)(?<suit>[mpsz])/)
       .flat_map do |numbers, suit|
       numbers.each_char.map { |number| Tile.new(number: number.to_i, suit: suit) }
     end
