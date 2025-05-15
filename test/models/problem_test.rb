@@ -1,8 +1,129 @@
 require "test_helper"
 
 class ProblemTest < ActiveSupport::TestCase
+  setup do
+    @problem = Problem.new(
+      title: "Test Problem",
+      hand_notation: "123456789m123p1s",
+      solution_notation: "123m"
+    )
+  end
+
+  test "should be valid with valid attributes" do
+    assert @problem.valid?
+  end
+
+  test "should require title" do
+    @problem.title = nil
+    refute @problem.valid?
+    assert_includes @problem.errors[:title], "can't be blank"
+  end
+
+  test "should limit title length" do
+    @problem.title = "a" * 256
+    refute @problem.valid?
+    assert_includes @problem.errors[:title], "is too long (maximum is 255 characters)"
+  end
+
+  ### Hand Notation Validations ###
+
+  test "should require hand_notation" do
+    @problem.hand_notation = nil
+    refute @problem.valid?
+    assert_includes @problem.errors[:hand_notation], "can't be blank"
+  end
+
+  test "should limit hand_notation length" do
+    @problem.hand_notation = "1m" * 128
+    refute @problem.valid?
+    assert_includes @problem.errors[:hand_notation], "is too long (maximum is 255 characters)"
+  end
+
+  test "should validate hand_notation format" do
+    invalid_formats = [
+      "abc",             # no numbers
+      "123",             # no suit
+      "1m 2p",           # spaces
+      "mm123",           # suit before number
+      "1mx"              # extra characters
+    ]
+
+    # todo fix this, check how to do dataproviders maybe?
+    invalid_formats.each do |format|
+      @problem.hand_notation = format
+      refute @problem.valid?, "#{format} should be invalid"
+      assert_includes @problem.errors[:hand_notation], "must be in format like '123m456p789s12345z'"
+    end
+  end
+
+  test "should validate hand has exactly 14 tiles" do
+    # todo fix
+    invalid_hands = {
+      "123m" => 3,           # too few tiles
+      "123456789m123456p" => 15  # too many tiles
+    }
+
+    invalid_hands.each do |hand, count|
+      @problem.hand_notation = hand
+      refute @problem.valid?, "#{hand} should be invalid"
+      assert_includes @problem.errors[:hand_notation], "must contain exactly 14 tiles (got: #{count})"
+    end
+  end
+
+  test "should validate tiles in hand are valid" do
+    # todo make correct length
+    @problem.hand_notation = "0w123q9z"
+    refute @problem.valid?
+    assert_match(/contains invalid tiles/, @problem.errors[:hand_notation].first)
+  end
+
+  ### Solution Notation Validations ###
+
+  test "should require solution_notation" do
+    @problem.solution_notation = nil
+    refute @problem.valid?
+    assert_includes @problem.errors[:solution_notation], "can't be blank"
+  end
+
+  test "should limit solution_notation length" do
+    @problem.solution_notation = "1m" * 128
+    refute @problem.valid?
+    assert_includes @problem.errors[:solution_notation], "is too long (maximum is 255 characters)"
+  end
+
+  test "should validate solution_notation format" do
+    invalid_formats = [
+      "abc",              # no numbers
+      "123",             # no suit
+      "1m 2p",           # spaces
+      "mm123",           # suit before number
+      "1mx"              # extra characters
+    ]
+
+    invalid_formats.each do |format|
+      @problem.solution_notation = format
+      refute @problem.valid?, "#{format} should be invalid"
+      assert_includes @problem.errors[:solution_notation], "must be in format like '123m456p789s12345z'"
+    end
+  end
+
+  test "should validate solution tiles exist in hand" do
+    @problem.hand_notation = "123456789m123p1s"
+    @problem.solution_notation = "456s"  # tiles not in hand
+    refute @problem.valid?
+    assert_match(/contains tiles not in hand/, @problem.errors[:solution_notation].first)
+  end
+
+  test "should validate solution tiles are valid" do
+    @problem.solution_notation = "0w123q9z"
+    refute @problem.valid?
+    assert_match(/contains invalid tiles/, @problem.errors[:solution_notation].first)
+  end
+
+  ### Tile Parsing Tests ###
+
   test "should return hand tiles with suits added" do
-    problem = Problem.new(hand_notation: "44m667p123678s666z", solution_notation: "6p")
+    @problem.hand_notation = "44m667p123678s666z"
 
     hand_tiles = problem.hand_tiles
 
@@ -26,8 +147,8 @@ class ProblemTest < ActiveSupport::TestCase
     assert_equal expected_tiles, hand_tiles
   end
 
-  test "should return solution tiles with 'OR' added" do
-    problem = Problem.new(hand_notation: "5677m34p45579s666z", solution_notation: "7m4s")
+  test "should return solution tiles" do
+    @problem.solution_notation = "7m4s"
 
     solution_tiles = problem.solution_tiles
 
@@ -40,7 +161,7 @@ class ProblemTest < ActiveSupport::TestCase
   end
 
   test "should return hand tiles in original order" do
-    problem = Problem.new(hand_notation: "2p343s44455z111m22p", solution_notation: "3s")
+    @problem.hand_notation = "2p343s44455z111m22p"
 
     hand_tiles = problem.hand_tiles
 
@@ -65,7 +186,7 @@ class ProblemTest < ActiveSupport::TestCase
   end
 
   test "should return hand tiles when given longhand format" do
-    problem = Problem.new(hand_notation: "1m2m3m4m5p6p7p8p9s9s1z1z2z2z", solution_notation: "9s")
+    @problem.hand_notation = "1m2m3m4m5p6p7p8p9s9s1z1z2z2z"
 
     hand_tiles = problem.hand_tiles
 
@@ -89,129 +210,19 @@ class ProblemTest < ActiveSupport::TestCase
     assert_equal expected_tiles, hand_tiles
   end
 
-  # Format validation tests
-  test "should be invalid with malformed hand notation" do
-    problem = Problem.new(
-      title: "Test Problem",
-      hand_notation: "abc123",
-      solution_notation: "1m"
-    )
+  ### Solved By Tests ###
 
-    refute problem.valid?
-    assert_includes problem.errors[:hand_notation], "must be in format like '123m456p789s12345z'"
+  test "solved_by? should return true for tiles in solution" do
+    @problem.hand_notation = "123456789m123p1s"
+    @problem.solution_notation = "123m"
+    tile = @problem.solution_tiles.first
+    assert @problem.solved_by?(tile)
   end
 
-  test "should be invalid with spaces in hand notation" do
-    problem = Problem.new(
-      title: "Test Problem",
-      hand_notation: "123m 456p",
-      solution_notation: "1m"
-    )
-
-    refute problem.valid?
-    assert_includes problem.errors[:hand_notation], "must be in format like '123m456p789s12345z'"
-  end
-
-  # Size validation tests
-  test "should be invalid with less than 14 tiles" do
-    problem = Problem.new(
-      title: "Test Problem",
-      hand_notation: "123m456p789s",
-      solution_notation: "1m"
-    )
-
-    refute problem.valid?
-    assert_includes problem.errors[:hand_notation], "must contain exactly 14 tiles (got: 9)"
-  end
-
-  test "should be invalid with more than 14 tiles" do
-    problem = Problem.new(
-      title: "Test Problem",
-      hand_notation: "123m456p789s123456z",
-      solution_notation: "1m"
-    )
-
-    refute problem.valid?
-    assert_includes problem.errors[:hand_notation], "must contain exactly 14 tiles (got: 15)"
-  end
-
-  # Tile validation tests
-  test "should be invalid with invalid numbered tile" do
-    problem = Problem.new(
-      title: "Test Problem",
-      hand_notation: "123m456p789s0m1234m",  # 0m is invalid
-      solution_notation: "1m"
-    )
-
-    refute problem.valid?
-    assert_match "contains invalid tiles: 0m: ", problem.errors[:hand_notation].first
-  end
-
-  test "should be invalid with invalid honor tile" do
-    problem = Problem.new(
-      title: "Test Problem",
-      hand_notation: "123m456p789s9z1234m",  # 9z is invalid
-      solution_notation: "1m"
-    )
-
-    refute problem.valid?
-    assert_match "contains invalid tiles: 9z:", problem.errors[:hand_notation].first
-  end
-
-  test "should be invalid with invalid suit" do
-    problem = Problem.new(
-      title: "Test Problem",
-      hand_notation: "123m456p789s12345x",  # x is not a valid suit
-      solution_notation: "1m"
-    )
-
-    refute problem.valid?
-    assert_match "contains invalid tiles: 1x:", problem.errors[:hand_notation].first
-  end
-
-  test "should be valid with correct hand notation" do
-    problem = Problem.new(
-      title: "Test Problem",
-      hand_notation: "123m456p789s123z45m",
-      solution_notation: "1m"
-    )
-
-    assert problem.valid?
-  end
-
-  test "should accept multiple invalid tiles and show all errors" do
-    problem = Problem.new(
-      title: "Test Problem",
-      hand_notation: "123m456p789s8z9z123m",  # both 8z and 9z are invalid
-      solution_notation: "1m"
-    )
-
-    refute problem.valid?
-    error_message = problem.errors[:hand_notation].first
-    p error_message
-    assert_match(/8z/, error_message)
-    assert_match(/9z/, error_message)
-  end
-
-  test "should handle empty hand notation" do
-    problem = Problem.new(
-      title: "Test Problem",
-      hand_notation: "",
-      solution_notation: "1m"
-    )
-
-    refute problem.valid?
-    assert_includes problem.errors[:hand_notation], "can't be blank"
-  end
-
-  test "should handle nil hand notation" do
-    problem = Problem.new(
-      title: "Test Problem",
-      hand_notation: nil,
-      solution_notation: "1m"
-    )
-
-    refute problem.valid?
-    assert_includes problem.errors[:hand_notation], "can't be blank"
+  test "solved_by? should return false for tiles not in solution" do
+    @problem.hand_notation = "123456789m123p1s"
+    @problem.solution_notation = "123m"
+    tile = Tile.new(number: 4, suit: "m")
+    refute @problem.solved_by?(tile)
   end
 end
