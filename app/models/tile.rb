@@ -11,14 +11,14 @@ class Tile
 
   validates :suit,
             presence: true,
-            inclusion: { in: VALID_SUITS, allow_blank: true }
+            inclusion: { in: VALID_SUITS, message: "must be m, p, s, or z", allow_blank: true }
   validates :number,
             presence: true,
-            inclusion: { in: VALID_NUMBERED_TILE_NUMBERS, message: "must be in range 1..9 for numbered tiles", allow_blank: true },
+            inclusion: { in: VALID_NUMBERED_TILE_NUMBERS, message: "must be in range 1-9 for numbered tiles", allow_blank: true },
             if: :numbered_tile
   validates :number,
             presence: true,
-            inclusion: { in: VALID_HONOR_TILE_NUMBERS, message: "must be in range 0..7 for honor tiles", allow_blank: true },
+            inclusion: { in: VALID_HONOR_TILE_NUMBERS, message: "must be in range 0-7 for honor tiles", allow_blank: true },
             if: :honor_tile
 
   def to_s
