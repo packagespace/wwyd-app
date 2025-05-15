@@ -18,19 +18,19 @@ class TileTest < ActiveSupport::TestCase
   test "should be invalid for invalid number in numbered suits" do
     tile = Tile.new(number: 0, suit: "m")
     refute tile.valid?
-    assert_includes tile.errors[:number], "must be in range 1..9 for numbered tiles"
+    assert_includes tile.errors[:number], "must be in range 1-9 for numbered tiles"
   end
 
   test "should be invalid for invalid number in honor suit" do
     tile = Tile.new(number: 8, suit: "z")
     refute tile.valid?
-    assert_includes tile.errors[:number], "must be in range 0..7 for honor tiles"
+    assert_includes tile.errors[:number], "must be in range 0-7 for honor tiles"
   end
 
   test "should be invalid for invalid suit" do
     tile = Tile.new(number: 1, suit: "x")
     refute tile.valid?
-    assert_includes tile.errors[:suit], "is not included in the list"
+    assert_includes tile.errors[:suit], "must be m, p, s, or z"
   end
 
   test "should compare tiles correctly" do
