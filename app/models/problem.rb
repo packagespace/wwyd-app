@@ -11,11 +11,11 @@ class Problem < ApplicationRecord
   end
 
   def hand_tiles
-    @hand_tiles ||= parse_tiles(hand_notation)
+    parse_tiles(hand_notation)
   end
 
   def solution_tiles
-    @solution_tiles ||= parse_tiles(solution_notation)
+    parse_tiles(solution_notation)
   end
 
   private

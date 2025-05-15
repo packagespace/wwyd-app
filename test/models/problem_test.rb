@@ -4,7 +4,7 @@ class ProblemTest < ActiveSupport::TestCase
   setup do
     @problem = Problem.new(
       title: "Test Problem",
-      hand_notation: "123456789m123p1s",
+      hand_notation: "123456789m123p12s",
       solution_notation: "123m"
     )
   end
@@ -48,8 +48,8 @@ class ProblemTest < ActiveSupport::TestCase
       "1mx"              # extra characters
     ]
 
-    # todo fix this, check how to do dataproviders maybe?
     invalid_formats.each do |format|
+      @problem.errors.clear
       @problem.hand_notation = format
       refute @problem.valid?, "#{format} should be invalid"
       assert_includes @problem.errors[:hand_notation], "must be in format like '123m456p789s12345z'"
@@ -57,13 +57,13 @@ class ProblemTest < ActiveSupport::TestCase
   end
 
   test "should validate hand has exactly 14 tiles" do
-    # todo fix
     invalid_hands = {
       "123m" => 3,           # too few tiles
       "123456789m123456p" => 15  # too many tiles
     }
 
     invalid_hands.each do |hand, count|
+      @problem.errors.clear
       @problem.hand_notation = hand
       refute @problem.valid?, "#{hand} should be invalid"
       assert_includes @problem.errors[:hand_notation], "must contain exactly 14 tiles (got: #{count})"
@@ -71,8 +71,7 @@ class ProblemTest < ActiveSupport::TestCase
   end
 
   test "should validate tiles in hand are valid" do
-    # todo make correct length
-    @problem.hand_notation = "0w123q9z"
+    @problem.hand_notation = "123456789w123q90z"
     refute @problem.valid?
     assert_match(/contains invalid tiles/, @problem.errors[:hand_notation].first)
   end
@@ -125,7 +124,7 @@ class ProblemTest < ActiveSupport::TestCase
   test "should return hand tiles with suits added" do
     @problem.hand_notation = "44m667p123678s666z"
 
-    hand_tiles = problem.hand_tiles
+    hand_tiles = @problem.hand_tiles
 
     expected_tiles = [
       Tile.new(number: 4, suit: "m"),
@@ -150,7 +149,7 @@ class ProblemTest < ActiveSupport::TestCase
   test "should return solution tiles" do
     @problem.solution_notation = "7m4s"
 
-    solution_tiles = problem.solution_tiles
+    solution_tiles = @problem.solution_tiles
 
     expected_tiles = [
       Tile.new(number: 7, suit: "m"),
@@ -163,7 +162,7 @@ class ProblemTest < ActiveSupport::TestCase
   test "should return hand tiles in original order" do
     @problem.hand_notation = "2p343s44455z111m22p"
 
-    hand_tiles = problem.hand_tiles
+    hand_tiles = @problem.hand_tiles
 
     expected_tiles = [
       Tile.new(number: 2, suit: "p"),
@@ -188,7 +187,7 @@ class ProblemTest < ActiveSupport::TestCase
   test "should return hand tiles when given longhand format" do
     @problem.hand_notation = "1m2m3m4m5p6p7p8p9s9s1z1z2z2z"
 
-    hand_tiles = problem.hand_tiles
+    hand_tiles = @problem.hand_tiles
 
     expected_tiles = [
       Tile.new(number: 1, suit: "m"),
