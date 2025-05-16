@@ -75,7 +75,7 @@ class SolvesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def solve_params
-    params.expect(solve: [ :tile, :problem_id ])
+    params.expect(solve: [ :tile_notation, :problem_id ])
   end
 
   def associate_solve_with_user

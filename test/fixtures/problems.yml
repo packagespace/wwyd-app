@@ -2,8 +2,8 @@
 
 one:
   title: "Riichi Book 1: 2-away vs 1-away"
-  hand: 5677m34p45579s666z
-  solution: 7m4s
+  hand_notation: 5677m34p45579s666z
+  solution_notation: 7m4s
   explanation: "Discarding 9s makes the hand 2-away, whereas discarding either 7m
   or 4s makes the hand 1-away. You should thus discard 7m or 4s to
   make the hand 1-away. Reverting a 1-away hand to 2-away makes

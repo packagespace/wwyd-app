@@ -18,7 +18,7 @@ class SolveFlowsTest < ActionDispatch::IntegrationTest
     post solves_url,
       params: {
         solve: {
-          tile: "7m",
+          tile_notation: "7m",
           problem_id: @problem.id
         }
       }
@@ -51,7 +51,7 @@ class SolveFlowsTest < ActionDispatch::IntegrationTest
     post solves_url,
       params: {
         solve: {
-          tile: "5m",
+          tile_notation: "5m",
           problem_id: @problem.id
         }
       }

@@ -15,7 +15,7 @@ class SolvesTest < ApplicationSystemTestCase
     click_on "New solve"
 
     fill_in "Problem", with: @solve.problem_id
-    fill_in "Tile", with: @solve.tile
+    fill_in "Tile notation", with: @solve.tile_notation
     fill_in "User", with: @solve.user_id
     click_on "Create Solve"
 
@@ -28,7 +28,7 @@ class SolvesTest < ApplicationSystemTestCase
     click_on "Edit this solve", match: :first
 
     fill_in "Problem", with: @solve.problem_id
-    fill_in "Tile", with: @solve.tile
+    fill_in "Tile notation", with: @solve.tile_notation
     fill_in "User", with: @solve.user_id
     click_on "Update Solve"
 
