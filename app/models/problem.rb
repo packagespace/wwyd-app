@@ -6,8 +6,9 @@ class Problem < ApplicationRecord
   validates :solution_notation, presence: true, length: { maximum: 255 }
   validate :valid_hand, :valid_solution
 
-  def solved_by?(tile)
-    tile.in? solution_tiles
+  def successfully_solved_by?(solve)
+    raise "solve must belong to problem" if solve.problem != self
+    solve.to_tile.in? solution_tiles
   end
 
   def hand_tiles

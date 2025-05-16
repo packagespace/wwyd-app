@@ -3,10 +3,7 @@ require "test_helper"
 class SolveTest < ActiveSupport::TestCase
   def setup
     @problem = problems(:one) # Assume you have this fixture
-    @solve = Solve.new(
-      problem: @problem,
-      tile_notation: "7m"
-    )
+    @solve = solves(:one)
   end
 
   test "should be valid with valid attributes" do
@@ -23,9 +20,6 @@ class SolveTest < ActiveSupport::TestCase
 
   test "should optionally belong to user" do
     @solve.user = nil
-    assert @solve.valid?
-
-    @solve.user = users(:one) # Assume you have this fixture
     assert @solve.valid?
   end
 

@@ -2,11 +2,7 @@ require "test_helper"
 
 class ProblemTest < ActiveSupport::TestCase
   setup do
-    @problem = Problem.new(
-      title: "Test Problem",
-      hand_notation: "123456789m123p12s",
-      solution_notation: "123m"
-    )
+    @problem = problems(:one)
   end
 
   test "should be valid with valid attributes" do
@@ -214,14 +210,14 @@ class ProblemTest < ActiveSupport::TestCase
   test "solved_by? should return true for tiles in solution" do
     @problem.hand_notation = "123456789m123p1s"
     @problem.solution_notation = "123m"
-    tile = @problem.solution_tiles.first
-    assert @problem.solved_by?(tile)
+    solve = Solve.new(tile_notation: @problem.solution_tiles.first.to_s, problem: @problem)
+    assert @problem.successfully_solved_by?(solve)
   end
 
   test "solved_by? should return false for tiles not in solution" do
     @problem.hand_notation = "123456789m123p1s"
     @problem.solution_notation = "123m"
-    tile = Tile.new(number: 4, suit: "m")
-    refute @problem.solved_by?(tile)
+    solve = Solve.new(tile_notation: Tile.new(number: 4, suit: "m").to_s, problem: @problem)
+    refute @problem.successfully_solved_by?(solve)
   end
 end
