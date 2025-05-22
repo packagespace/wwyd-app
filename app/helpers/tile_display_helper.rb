@@ -45,17 +45,19 @@ module TileDisplayHelper
 
     replacements = []
 
-    tile_images_files.each do |tile_label, tile_image_file|
+    tile_images_files.each do |tile_notation, tile_image_file|
       text_with_tiles.gsub!(
-        tile_label,
-        "\x01" + tile_label + "\x02"
+        tile_notation,
+        "\x01" + tile_notation + "\x02"
       )
 
       replacements << button_to(
-        image_tag("tiles/#{tile_image_file}", alt: tile_label),
+        image_tag("tiles/#{tile_image_file}", alt: tile_notation),
         solves_url,
-        params: { solve: { tile: tile_label, problem_id: problem } },
-        class: "inline tile bg-contain #{style} #{tile_label}"
+        params: { solve: {
+          tile_notation: tile_notation,
+          problem_id: problem } },
+        class: "inline tile bg-contain #{style} #{tile_notation}"
       )
     end
 
@@ -110,13 +112,13 @@ module TileDisplayHelper
 
     replacements = []
 
-    tile_images_files.each do |tile_label, tile_image_file|
+    tile_images_files.each do |tile_notation, tile_image_file|
       text_with_tiles.gsub!(
-        tile_label,
-        "\x01" + tile_label + "\x02"
+        tile_notation,
+        "\x01" + tile_notation + "\x02"
       )
 
-      replacements << image_tag("tiles/#{tile_image_file}", class: "inline tile bg-contain #{style}", alt: tile_label)
+      replacements << image_tag("tiles/#{tile_image_file}", class: "inline tile bg-contain #{style}", alt: tile_notation)
     end
 
     replacements.each_with_index do |replacement, index|
@@ -170,13 +172,13 @@ module TileDisplayHelper
 
     replacements = []
 
-    tile_images_files.each do |tile_label, tile_image_file|
+    tile_images_files.each do |tile_notation, tile_image_file|
       text_with_tiles.gsub!(
-        tile_label,
-        "\x01" + tile_label + "\x02"
+        tile_notation,
+        "\x01" + tile_notation + "\x02"
       )
 
-      replacements << image_tag("tiles/#{tile_image_file}", class: "inline tile bg-contain #{style}", alt: tile_label)
+      replacements << image_tag("tiles/#{tile_image_file}", class: "inline tile bg-contain #{style}", alt: tile_notation)
     end
 
     replacements.each_with_index do |replacement, index|

@@ -10,9 +10,9 @@
       </p>
       <div class="flex flex-initial gap-0.5 mb-1">
         <% if @solve.nil? %>
-          <%= display_clickable_tiles(@problem.tiles, 'hover:bottom-5 relative', @problem) %>
+          <%= display_clickable_tiles(@problem.hand_tiles.join, 'hover:bottom-5 relative', @problem) %>
         <% else %>
-          <%= display_tiles_divs(@problem.tiles) %>
+          <%= display_tiles_divs(@problem.hand_tiles.join) %>
         <% end %>
       </div>
 
@@ -23,17 +23,17 @@
 
       <div class="text-center bg-gray-200 rounded-lg w-1/2 mx-auto">
         <p id="solved-message">
-          <% if @problem.is_solved_by? @solve.tile %>
-            <span data-testid="solve-tile"><%= @solve.tile %></span>: Correct answer!
+          <% if @solved_successfully %>
+            <span data-testid="solve-tile"><%= @solve.tile_notation %></span>: Correct answer!
           <% else %>
-            <span data-testid="solve-tile"><%= @solve.tile %></span>: Incorrect answer
+            <span data-testid="solve-tile"><%= @solve.tile_notation %></span>: Incorrect answer
           <% end %>
         </p>
       </div>
       <div class="my-5">
         <strong class="block font-medium mb-1">Solution:</strong>
         <p id="solution">
-          <%= display_tiles(@problem.solution_tiles, 'w-10') %>
+          <%= display_tiles(@problem.solution_tiles.join(" or "), 'w-10') %>
         </p>
       </div>
 

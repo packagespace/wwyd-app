@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  tile: 7m
+  tile_notation: 7m
   problem: one
   user: one
 
 #two:
-#  tile: MyString
+#  tile_notation: MyString
 #  problem: two
 #  user: two

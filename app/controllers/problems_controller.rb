@@ -14,7 +14,7 @@ class ProblemsController < ApplicationController
       Solve.find_by(id: session[:solve_ids], problem: @problem)
     end
     unless @solve.nil?
-      @solved = @problem.is_solved_by?(@solve.tile)
+      @solved_successfully = @problem.successfully_solved_by?(@solve)
     end
   end
 
@@ -74,6 +74,6 @@ class ProblemsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def problem_params
-    params.require(:problem).permit(:title, :hand, :solution, :explanation)
+    params.require(:problem).permit(:title, :hand_notation, :solution_notation, :explanation)
   end
 end
